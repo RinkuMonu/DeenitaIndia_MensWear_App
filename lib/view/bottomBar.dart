@@ -14,6 +14,7 @@ class BottomBar extends StatefulWidget {
 }
 
 class _BottomBarState extends State<BottomBar> {
+
   int _currentIndex = 0;
 
   final  _pages = const [

@@ -25,77 +25,151 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     ScreenSize.init(context);
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: ScreenSize.height * .06,),
-            Row(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.4),
-                        blurRadius: 20,
-                        spreadRadius: 2,
-                        offset: const Offset(0, 8), // downward shadow
-                      ),
-                    ],
-                  ),
-                  padding: EdgeInsets.all(4),
-                  child: CircleAvatar(
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Image.asset(AppImage.avatar)),
-                  ),
-                ),
-                SizedBox(width: 10,),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: AppColors.primary,
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                  child: Text(
-                    'My Activity', style: AppTextStyles.raleWay16White,),
-                ),
-                Spacer(),
-                topIcons(icon: Icons.add_alarm_sharp, onIconTap: () {}),
-                SizedBox(width: 10,),
-                topIcons(icon: Icons.add_alarm_sharp, onIconTap: () {}),
-                SizedBox(width: 10,),
-                topIcons(icon: Icons.settings, onIconTap: () {
-                  Get.to(()=> Setting());
-                }),
-              ],
-            ),
-            SizedBox(height: ScreenSize.height * .01,),
-            Text('Hello, Romina!', style: AppTextStyles.raleWayBold30,),
-            SizedBox(height: ScreenSize.height * .01,),
-            Container(
-              width: double.maxFinite,
-              decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
-                  borderRadius: BorderRadius.circular(8)
-              ),
-              padding: EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return Obx((){
+      return Scaffold(
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: ScreenSize.height * .06,),
+              Row(
                 children: [
-                  Text('Accouncement', style: AppTextStyles.raleWay14Bold,),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.4),
+                          blurRadius: 20,
+                          spreadRadius: 2,
+                          offset: const Offset(0, 8), // downward shadow
+                        ),
+                      ],
+                    ),
+                    padding: EdgeInsets.all(4),
+                    child: CircleAvatar(
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image.asset(AppImage.avatar)),
+                    ),
+                  ),
+                  SizedBox(width: 10,),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      color: AppColors.primary,
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                    child: Text(
+                      'My Activity', style: AppTextStyles.raleWay16White,),
+                  ),
+                  Spacer(),
+                  topIcons(icon: Icons.add_alarm_sharp, onIconTap: () {}),
+                  SizedBox(width: 10,),
+                  topIcons(icon: Icons.add_alarm_sharp, onIconTap: () {}),
+                  SizedBox(width: 10,),
+                  topIcons(icon: Icons.settings, onIconTap: () {
+                    Get.to(()=> Setting());
+                  }),
+                ],
+              ),
+              SizedBox(height: ScreenSize.height * .01,),
+              Text('Hello, ${_controller.name}', style: AppTextStyles.raleWayBold30,),
+              SizedBox(height: ScreenSize.height * .01,),
+              _bannerSection(_controller.topBanners, 140, BoxFit.fill),
+              Container(
+                width: double.maxFinite,
+                decoration: BoxDecoration(
+                    color: Colors.grey.shade100,
+                    borderRadius: BorderRadius.circular(8)
+                ),
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Accouncement', style: AppTextStyles.raleWay14Bold,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(child: Text(
+                          'New offers and updates are available. Check now!',
+                          style: AppTextStyles.nunitoSans10,)),
+                        InkWell(
+                            onTap: () {
+                              //Get.to(()=> Login());
+                            },
+                            child: CircleAvatar(
+                              radius: 16,
+                              backgroundColor: AppColors.primary,
+                              child: Icon(
+                                Icons.arrow_forward, size: 20, color: Colors
+                                  .white,),)),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+
+              SizedBox(height: ScreenSize.height * .022,),
+              Text('Recently Viewed', style: AppTextStyles.raleWayBold21,),
+              SizedBox(height: ScreenSize.height * .01,),
+              Container(
+                //color: Colors.red,
+                height: ScreenSize.height * .08,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 14,
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: EdgeInsets.only(left: 10),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              blurRadius: 8,
+                              spreadRadius: 2,
+                              offset: const Offset(0, 8), // downward shadow
+                            ),
+                          ],
+                        ),
+                        padding: EdgeInsets.all(4),
+                        child: CircleAvatar(
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image.asset(AppImage.avatar)),
+                        ),
+                      );
+                    }),
+              ),
+              SizedBox(height: ScreenSize.height * .024,),
+              Text('My Orders', style: AppTextStyles.raleWayBold21,),
+              SizedBox(height: ScreenSize.height * .01,),
+              Wrap(
+                children: [
+                  buildContainer(text: 'To Pay', color: AppColors.containerColor),
+                  SizedBox(width: 10,),
+                  buildContainer(text: 'To Receive', color: AppColors.containerColor),
+                  SizedBox(width: 10,),
+                  buildContainer(text: 'To Review', color: AppColors.containerColor),
+                ],
+              ),
+              SizedBox(height: ScreenSize.height * .024,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('New Items', style: AppTextStyles.raleWayBold21,),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(child: Text(
-                        'New offers and updates are available. Check now!',
-                        style: AppTextStyles.nunitoSans10,)),
+                      Text('See All', style: AppTextStyles.raleWayBold15,),
+                      SizedBox(width: 14,),
                       InkWell(
                           onTap: () {
                             //Get.to(()=> Login());
@@ -110,211 +184,140 @@ class _HomeState extends State<Home> {
                   ),
                 ],
               ),
-            ),
-            SizedBox(height: ScreenSize.height * .022,),
-            Text('Recently Viewed', style: AppTextStyles.raleWayBold21,),
-            SizedBox(height: ScreenSize.height * .01,),
-            _bannerSection(_controller.topBanners, 150, BoxFit.fill),
-            Container(
-              //color: Colors.red,
-              height: ScreenSize.height * .08,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 14,
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: EdgeInsets.only(left: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
-                            blurRadius: 8,
-                            spreadRadius: 2,
-                            offset: const Offset(0, 8), // downward shadow
+              SizedBox(height: ScreenSize.height * .01,),
+              SizedBox(
+                //color: Colors.red,
+                height: ScreenSize.height * .24,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 14,
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(left: 10),
+                            //alignment: Alignment.centerRight,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(6),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.4),
+                                  blurRadius: 10,
+                                  spreadRadius: 2,
+                                  offset: const Offset(0, 8), // downward shadow
+                                ),
+                              ],
+                            ),
+                            padding: EdgeInsets.all(4),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ClipRRect(
+                                    borderRadius: BorderRadius.circular(6),
+                                    child: Image.asset(AppImage.demoImage,height: ScreenSize.height * .17,width: ScreenSize.width * .34,fit: BoxFit.cover,)),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 4,),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 14),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Hello',style: AppTextStyles.raleWay12,),
+                                Text('₹17,00', style: AppTextStyles.raleWayBold17,),
+                              ],
+                            ),
                           ),
                         ],
-                      ),
-                      padding: EdgeInsets.all(4),
-                      child: CircleAvatar(
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Image.asset(AppImage.avatar)),
-                      ),
-                    );
-                  }),
-            ),
-            SizedBox(height: ScreenSize.height * .024,),
-            Text('My Orders', style: AppTextStyles.raleWayBold21,),
-            SizedBox(height: ScreenSize.height * .01,),
-          Wrap(
-            children: [
-              buildContainer(text: 'To Pay', color: AppColors.containerColor),
-              SizedBox(width: 10,),
-              buildContainer(text: 'To Receive', color: AppColors.containerColor),
-              SizedBox(width: 10,),
-              buildContainer(text: 'To Review', color: AppColors.containerColor),
+                      );
+                    }),
+              ),
+              SizedBox(height: ScreenSize.height * .02,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Most Popular', style: AppTextStyles.raleWayBold21,),
+                  Row(
+                    children: [
+                      Text('See All', style: AppTextStyles.raleWayBold15,),
+                      SizedBox(width: 14,),
+                      InkWell(
+                          onTap: () {
+                            //Get.to(()=> Login());
+                          },
+                          child: CircleAvatar(
+                            radius: 16,
+                            backgroundColor: AppColors.primary,
+                            child: Icon(
+                              Icons.arrow_forward, size: 20, color: Colors
+                                .white,),)),
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(height: ScreenSize.height * .01,),
+              SizedBox(
+                //color: Colors.red,
+                height: ScreenSize.height * .24,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 14,
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(left: 10),
+                            //alignment: Alignment.centerRight,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(6),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.4),
+                                  blurRadius: 10,
+                                  spreadRadius: 2,
+                                  offset: const Offset(0, 8), // downward shadow
+                                ),
+                              ],
+                            ),
+                            padding: EdgeInsets.all(4),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ClipRRect(
+                                    borderRadius: BorderRadius.circular(6),
+                                    child: Image.asset(AppImage.demoImage,height: ScreenSize.height * .17,width: ScreenSize.width * .34,fit: BoxFit.cover,)),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 4,),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 14),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Hello',style: AppTextStyles.raleWay12,),
+                                Text('₹17,00', style: AppTextStyles.raleWayBold17,),
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    }),
+              ),
             ],
           ),
-            SizedBox(height: ScreenSize.height * .024,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('New Items', style: AppTextStyles.raleWayBold21,),
-                Row(
-                  children: [
-                    Text('See All', style: AppTextStyles.raleWayBold15,),
-                    SizedBox(width: 14,),
-                    InkWell(
-                        onTap: () {
-                          //Get.to(()=> Login());
-                        },
-                        child: CircleAvatar(
-                          radius: 16,
-                          backgroundColor: AppColors.primary,
-                          child: Icon(
-                            Icons.arrow_forward, size: 20, color: Colors
-                              .white,),)),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(height: ScreenSize.height * .01,),
-            SizedBox(
-              //color: Colors.red,
-              height: ScreenSize.height * .24,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 14,
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(left: 10),
-                          //alignment: Alignment.centerRight,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(6),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.4),
-                                blurRadius: 10,
-                                spreadRadius: 2,
-                                offset: const Offset(0, 8), // downward shadow
-                              ),
-                            ],
-                          ),
-                          padding: EdgeInsets.all(4),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ClipRRect(
-                                  borderRadius: BorderRadius.circular(6),
-                                  child: Image.asset(AppImage.demoImage,height: ScreenSize.height * .17,width: ScreenSize.width * .34,fit: BoxFit.cover,)),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: 4,),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 14),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Hello',style: AppTextStyles.raleWay12,),
-                              Text('₹17,00', style: AppTextStyles.raleWayBold17,),
-                            ],
-                          ),
-                        ),
-                      ],
-                    );
-                  }),
-            ),
-            SizedBox(height: ScreenSize.height * .02,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Most Popular', style: AppTextStyles.raleWayBold21,),
-                Row(
-                  children: [
-                    Text('See All', style: AppTextStyles.raleWayBold15,),
-                    SizedBox(width: 14,),
-                    InkWell(
-                        onTap: () {
-                          //Get.to(()=> Login());
-                        },
-                        child: CircleAvatar(
-                          radius: 16,
-                          backgroundColor: AppColors.primary,
-                          child: Icon(
-                            Icons.arrow_forward, size: 20, color: Colors
-                              .white,),)),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(height: ScreenSize.height * .01,),
-            SizedBox(
-              //color: Colors.red,
-              height: ScreenSize.height * .24,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 14,
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(left: 10),
-                          //alignment: Alignment.centerRight,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(6),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.4),
-                                blurRadius: 10,
-                                spreadRadius: 2,
-                                offset: const Offset(0, 8), // downward shadow
-                              ),
-                            ],
-                          ),
-                          padding: EdgeInsets.all(4),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ClipRRect(
-                                  borderRadius: BorderRadius.circular(6),
-                                  child: Image.asset(AppImage.demoImage,height: ScreenSize.height * .17,width: ScreenSize.width * .34,fit: BoxFit.cover,)),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: 4,),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 14),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Hello',style: AppTextStyles.raleWay12,),
-                              Text('₹17,00', style: AppTextStyles.raleWayBold17,),
-                            ],
-                          ),
-                        ),
-                      ],
-                    );
-                  }),
-            ),
-          ],
         ),
-      ),
-    );
+      );
+    });
   }
 
   Widget topIcons({
@@ -340,7 +343,8 @@ class _HomeState extends State<Home> {
       BoxFit fit,
       ) {
     return SizedBox(
-      height: height + 140, // 🔥 tall like poster banner
+
+      height: height + 80, // 🔥 tall like poster banner
       child: Obx(() {
         // if (banners.isEmpty) {
         //   return _staticBanner(height: height);
@@ -366,7 +370,7 @@ class _HomeState extends State<Home> {
                 vertical: 16,
               ),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(24),
+                borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
                       color: Colors.black,
@@ -375,11 +379,17 @@ class _HomeState extends State<Home> {
                   )
                 ],
                 /// 🔥 IMAGE AS BACKGROUND
+                // image: DecorationImage(
+                //   image: NetworkImage(
+                //     "${ApiUrl.bannerBaseUrl}${banner.images!.first}",
+                //   ),
+                //   fit: BoxFit.contain,
+                // ),
                 image: DecorationImage(
                   image: NetworkImage(
-                    "${ApiUrl.bannerBaseUrl}${banner.images}",
+                    "${ApiUrl.bannerBaseUrl}${banner.images!.first}",
                   ),
-                  fit: BoxFit.fill,
+                  fit: fit,
                 ),
 
 
@@ -388,7 +398,7 @@ class _HomeState extends State<Home> {
           },
           options: CarouselOptions(
             height: height + 120,
-            viewportFraction: 0.96, // 🔥 edge-to-edge feel
+            viewportFraction: 1, // 🔥 edge-to-edge feel
             enlargeCenterPage: false,
             enableInfiniteScroll: banners.length > 1,
             autoPlay: banners.length > 1,
