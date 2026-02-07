@@ -25,4 +25,5 @@ class AppImage {
   static const String onbBack2 = "assets/image/onbback2.png";
   static const String backWave = "assets/image/backwave.png";
   static const String dummy = "assets/image/dummy.png";
+  static const String emptyNotification = "assets/image/blankNotificationImage.svg";
 }
