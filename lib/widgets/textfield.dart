@@ -184,8 +184,10 @@ class CommonTextField2 extends StatelessWidget {
   final String hint;
   final bool obscureText;
   final int? maxLength;
+  final bool readOnly;
   final Widget? preffix;
   final VoidCallback? onToggleVisibility;
+  final VoidCallback? onTap;
   final Widget? suffix;
   //final ValueNotifier<String?> errorNotifier;
 
@@ -197,10 +199,12 @@ class CommonTextField2 extends StatelessWidget {
     //required this.errorNotifier,
     this.mainController,
     this.focusNode,
+    this.readOnly = false,
     this.label,
     this.obscureText = false,
     this.maxLength,
     this.onToggleVisibility,
+    this.onTap,
     this.suffix,
     this.preffix
   });
@@ -229,14 +233,14 @@ class CommonTextField2 extends StatelessWidget {
             obscureText: obscureText,
             maxLength: maxLength,
             cursorColor: Colors.black,
-            readOnly: hint.contains('Enter email') &&
-                mainController?.isEmailVerified?.value == true,
+            readOnly: readOnly,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             keyboardType: _getKeyboardType(),
             textCapitalization: hint.contains("PAN Card Number")
                 ? TextCapitalization.characters
                 : TextCapitalization.none,
             decoration: _inputDecoration(),
+            onTap: onTap
             // onChanged: (value) {
             //   errorNotifier.value = _validate(value);
             //   if (hint == "Enter mobile number" && value.length == 10) {
