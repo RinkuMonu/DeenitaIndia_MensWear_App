@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:deenitaindia/constants/colors.dart';
 import 'package:deenitaindia/constants/image.dart';
 import 'package:deenitaindia/constants/textstyle.dart';
+import 'package:deenitaindia/view/notificationScreen.dart';
 import 'package:deenitaindia/view/setting.dart';
 import 'package:deenitaindia/widgets/textfield.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,9 @@ class _HomeState extends State<Home> {
                 Spacer(),
                 topIcons(icon: AppImage.fav, onIconTap: () {}),
                 SizedBox(width: 16,),
-                topIcons(icon: 'assets/icons/bell.svg', onIconTap: () {}),
+                topIcons(icon: 'assets/icons/bell.svg', onIconTap: () {
+                  Get.to(() => NotificationScreen());
+                }),
               ],
             ),
             SizedBox(height: ScreenSize.height * .01,),

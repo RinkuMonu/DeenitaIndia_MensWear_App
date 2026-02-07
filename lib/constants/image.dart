@@ -25,6 +25,7 @@ class AppImage {
   static const String onbBack2 = "assets/image/onbback2.png";
   static const String backWave = "assets/image/backwave.png";
   static const String dummy = "assets/image/dummy.png";
+
   static const String shirt = "assets/image/shirt.png";
   static const String fav = "assets/icons/fav.svg";
   static const String cart = "assets/icons/Cart.svg";
@@ -32,4 +33,7 @@ class AppImage {
   static const String more = "assets/icons/more.svg";
   static const String search = "assets/icons/Search.svg";
   static const String user = "assets/icons/User.svg";
+
+  static const String emptyNotification = "assets/image/blankNotificationImage.svg";
+
 }
