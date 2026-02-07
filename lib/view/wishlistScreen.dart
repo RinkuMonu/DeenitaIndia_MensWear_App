@@ -35,7 +35,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        // SvgPicture.asset(AppImage.emptyWishList, height: 55),
+        SvgPicture.asset(AppImage.emptyWishList, height: 55),
         const SizedBox(height: 12),
         const Text(
           "Wishlist is empty!",
