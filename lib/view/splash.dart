@@ -28,33 +28,29 @@ class _SplashState extends State<Splash> {
     ScreenSize.init(context);
     return  Scaffold(
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Center(
-              child: Obx(
-                    () => AnimatedOpacity(
+      body: Column(
+        children: [
+         /* Center(
+            child: Obx(
+                  () => AnimatedOpacity(
+                duration: const Duration(milliseconds: 800),
+                opacity: _controller.opacity.value,
+                child: AnimatedScale(
                   duration: const Duration(milliseconds: 800),
-                  opacity: _controller.opacity.value,
-                  child: AnimatedScale(
-                    duration: const Duration(milliseconds: 800),
-                    curve: Curves.easeOutBack,
-                    scale: _controller.scale.value,
-                    child: Image.asset(
-                      AppImage.logo,
-                      height: 160,
-                      width: 160,
-                      fit: BoxFit.contain,
-                    ),
+                  curve: Curves.easeOutBack,
+                  scale: _controller.scale.value,
+                  child: Image.asset(
+                    AppImage.logo,
+                    height: 160,
+                    width: 160,
+                    fit: BoxFit.contain,
                   ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),*/
+          Image.asset(AppImage.splash,)
+        ],
       ),
     );
   }

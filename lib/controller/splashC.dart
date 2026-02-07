@@ -26,17 +26,13 @@ class SplashC extends GetxController{
 
 
   Future<void> _checkUserData() async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 4));
 
     token.value = await LocalStorage.get("token") ?? "";
-    // role.value = await LocalStorage.get("role") ?? "";
-    // userId.value = await LocalStorage.get("userId") ?? "";
 
     print('Token ::  ${token.value}');
-    // print('Role ::  ${role.value}');
-    // print('UserId ::  ${userId.value}');
 
-    //If not logged in → go to login
+
     if (token.value.isEmpty) {
       Get.offAll(() =>  Onboarding());
       return;

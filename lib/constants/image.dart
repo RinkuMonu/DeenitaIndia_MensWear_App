@@ -17,4 +17,12 @@ class AppImage {
   static const String ready = "assets/image/ready.png";
   static const String avatar = "assets/image/avatar.png";
   static const String demoImage = "assets/image/MaskGroup.png";
+  static const String splash = "assets/image/splash.png";
+  static const String onboard1 = "assets/image/onb1.png";
+  static const String onboard2 = "assets/image/onb2.png";
+  static const String onboard3 = "assets/image/onb3.png";
+  static const String onbBack1 = "assets/image/onbback1.png";
+  static const String onbBack2 = "assets/image/onbback2.png";
+  static const String backWave = "assets/image/backwave.png";
+  static const String dummy = "assets/image/dummy.png";
 }

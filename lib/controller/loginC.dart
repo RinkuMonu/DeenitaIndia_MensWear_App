@@ -15,6 +15,7 @@ class LoginC extends GetxController{
   final mobileC = TextEditingController();
   final nameC = TextEditingController();
   final passC = TextEditingController();
+  final otpC = TextEditingController();
   RxBool isLoading = false.obs;
 
   Future<void> loginWithPassword() async {
@@ -67,41 +68,24 @@ class LoginC extends GetxController{
   RxBool isPasswordHidden = true.obs;
 
   void validate(){
-    final email = emailC.text.trim();
-    final password = passC.text.trim();
+    final mobile = mobileC.text.trim();
 
-    if(emailC.text.isEmpty || passC.text.isEmpty ){
+    if(mobile.isEmpty ){
       print('object');
-      showSnackBar(title: '', message: 'All Field is required', context: Get.context!, error: 'error');
+      showSnackBar(title: '', message: 'Mobile number is required', context: Get.context!, error: 'error');
       return;
     }
-    final emailRegex = RegExp(
-      r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-    );
+    final mobileRegex = RegExp(r'^[6-9]\d{9}$');
 
-    if (!emailRegex.hasMatch(email)) {
+    if (!mobileRegex.hasMatch(mobile)) {
       showSnackBar(
         title: '',
-        message: 'Enter a valid email address',
+        message: 'Enter a valid mobile number',
         context: Get.context!,
         error: 'error',
       );
       return;
     }
-
-    final passRegex = RegExp(
-      r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#\$&*~]).{8,}$',
-    );
-
-    if (!passRegex.hasMatch(password)) {
-      showSnackBar(
-        title: '',
-        message: 'Password must be at least 8 chars, include upper, lower, number & special char',
-        context: Get.context!,
-        error: 'error',
-      );
-      return;
-    }
-    loginWithPassword();
+   // loginWithPassword();
   }
 }

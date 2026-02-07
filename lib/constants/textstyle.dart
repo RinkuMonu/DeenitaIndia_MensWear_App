@@ -101,4 +101,50 @@ class AppTextStyles {
       fontFamily: 'Nunito Sans',
       color: Colors.black
   );
+
+
+
+
+
+
+
+
+
+  static final TextStyle alexandria32 = TextStyle(
+      fontSize: 32,
+      fontWeight: FontWeight.w600,
+      fontFamily: 'Alexandria',
+      color: Colors.black,
+      letterSpacing: -2
+  );
+
+  static final TextStyle alexandria32Secondary = TextStyle(
+      fontSize: 32,
+      fontWeight: FontWeight.w600,
+      fontFamily: 'Alexandria',
+      color: AppColors.secondary,
+    letterSpacing: -2
+  );
+
+  static final TextStyle alexandria16w300 = TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w300,
+      fontFamily: 'Alexandria',
+      color: Color(0xff999999)
+  );
+
+  static final TextStyle alexandria16w400 = TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+      fontFamily: 'Alexandria',
+  );
+
+  static final TextStyle alexandria16w500 = TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+      fontFamily: 'Alexandria',
+  );
+
+
+
 }

@@ -1,3 +1,4 @@
+import 'package:deenitaindia/constants/textstyle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../constants/colors.dart';
@@ -40,10 +41,7 @@ class CommonTextField extends StatelessWidget {
           if (label != null)
             Text(
               label!,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-              ),
+              style: AppTextStyles.alexandria16w500
             ),
           const SizedBox(height: 8),
 
@@ -54,6 +52,7 @@ class CommonTextField extends StatelessWidget {
             obscureText: obscureText,
             maxLength: maxLength,
             cursorColor: Colors.black,
+            style: TextStyle(color: Colors.grey,fontSize: 16,fontWeight: FontWeight.w500),
             readOnly: hint.contains('Enter email') &&
                 mainController?.isEmailVerified?.value == true,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -101,10 +100,10 @@ class CommonTextField extends StatelessWidget {
       hintText: hint,
       counterText: "",
       filled: true,
-      fillColor: Colors.grey.shade100,
-      hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
-      enabledBorder: _border(Colors.transparent),
-      focusedBorder: _border(AppColors.primary),
+      fillColor: Colors.white,
+      hintStyle: const TextStyle(fontSize: 16, color: Colors.grey,fontWeight: FontWeight.w300),
+      enabledBorder: _border(Colors.grey.shade200),
+      focusedBorder: _border(Colors.grey.shade200),
       errorBorder: _border(Colors.red),
       suffixIcon: _buildSuffix(),
       prefixIcon: _buildPrefix(),
@@ -112,26 +111,25 @@ class CommonTextField extends StatelessWidget {
   }
 
   OutlineInputBorder _border(Color color) => OutlineInputBorder(
-    borderRadius: BorderRadius.circular(24),
+    borderRadius: BorderRadius.circular(10),
     borderSide: BorderSide(color: color, width: 2),
   );
 
   Widget? _buildPrefix() {
-    if (!hint.contains("Enter mobile number")) return null;
+    if (!hint.contains("Enter your mobile number")) return null;
 
     return SizedBox(
-      width: 40,
+      width: 60,
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.only(left: 8),
+          padding: const EdgeInsets.only(left: 0),
           child: Text(
             '91+',
             style: TextStyle(
-              fontSize: 14,
-              color: controller.text.isNotEmpty
-                  ? Colors.black
-                  : Colors.grey.shade500,
+              fontSize: 16,
               fontWeight: FontWeight.w500,
+              fontFamily: 'Alexandria',
+              color: Color(0xff808080)
             ),
           ),
         ),
@@ -186,6 +184,7 @@ class CommonTextField2 extends StatelessWidget {
   final String hint;
   final bool obscureText;
   final int? maxLength;
+  final Widget? preffix;
   final VoidCallback? onToggleVisibility;
   final Widget? suffix;
   //final ValueNotifier<String?> errorNotifier;
@@ -203,6 +202,7 @@ class CommonTextField2 extends StatelessWidget {
     this.maxLength,
     this.onToggleVisibility,
     this.suffix,
+    this.preffix
   });
 
   @override
@@ -276,13 +276,13 @@ class CommonTextField2 extends StatelessWidget {
       hintText: hint,
       counterText: "",
       filled: true,
-      fillColor: AppColors.textFieldBackColor,
+      fillColor: Colors.white,
       hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
-      enabledBorder: _border(Colors.transparent),
+      enabledBorder: _border(Colors.grey.shade200),
       focusedBorder: _border(AppColors.primary),
       errorBorder: _border(Colors.red),
       suffixIcon: _buildSuffix(),
-      prefixIcon: _buildPrefix(),
+      prefixIcon: preffix,
     );
   }
 

@@ -18,7 +18,7 @@ class HomeC extends GetxController{
   var isLoading = false.obs;
   var isLoadingUpdate = false.obs;
 
-
+  RxInt selectedIndex = 0.obs;
   late ScrollController bannerScrollController;
   Rx<BannerModel> model = BannerModel().obs;
   final Rx<ProfileModel> profileModel = ProfileModel().obs;
@@ -30,8 +30,8 @@ class HomeC extends GetxController{
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    getBanner();
-    getProfile();
+   // getBanner();
+    //getProfile();
   }
 
   Future<BannerModel?> getBanner() async {

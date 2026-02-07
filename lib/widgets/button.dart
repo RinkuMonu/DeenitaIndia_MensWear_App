@@ -61,10 +61,9 @@ class AppButton extends StatelessWidget {
               Text(
                 title,
                 style: TextStyle(
-
-                  color: isOutlined ? bgColor : title.contains('Verify Otp ') || title.contains('Verify Pan') || title.contains('Verify Bank') || title.contains('Submit KYC') ? Colors.black : Colors.white,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 15,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
                 ),
               ),
 

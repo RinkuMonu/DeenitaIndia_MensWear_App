@@ -15,11 +15,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ToastificationWrapper(
       child: GetMaterialApp(
+        builder: (context, child) {
+          return MediaQuery(
+            data: MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling),
+            child: child!,
+          );
+        },
         title: 'Deenita',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: .fromSeed(seedColor: Colors.deepPurple),
-        ),
+        // theme: ThemeData(
+        //  // primarySwatch: Colors.blue,
+        //   fontFamily: 'Alexandria',
+        // ),
         home: const Splash(),
       ),
     );
