@@ -133,6 +133,13 @@ class AppTextStyles {
       color: Color(0xff999999)
   );
 
+  static final TextStyle alexandria16w300Black = TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w300,
+      fontFamily: 'Alexandria',
+   // color: Color(0xff1A1A1A)
+  );
+
   static final TextStyle alexandria16w400 = TextStyle(
       fontSize: 16,
       fontWeight: FontWeight.w400,
