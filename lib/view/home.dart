@@ -42,7 +42,7 @@ class _HomeState extends State<Home> {
               children: [
                 Text('Style, Your Way',style: AppTextStyles.alexandria32Secondary,),
                 Spacer(),
-                topIcons(icon: 'assets/icons/fav.svg', onIconTap: () {}),
+                topIcons(icon: AppImage.fav, onIconTap: () {}),
                 SizedBox(width: 16,),
                 topIcons(icon: 'assets/icons/bell.svg', onIconTap: () {}),
               ],
@@ -51,7 +51,7 @@ class _HomeState extends State<Home> {
             Row(
               children: [
                 Expanded(
-                    child: CommonTextField2(controller: searchController, hint: 'Search for clothes...',preffix: Icon(Icons.search,color: Colors.grey,),)),
+                    child: CommonTextField2(controller: searchController, hint: 'Search for clothes...',preffix: SvgPicture.asset(AppImage.search,height: 28,width: 28,),)),
                 SizedBox(width: 10,),
                 Container(
                   width: 60,
@@ -67,13 +67,14 @@ class _HomeState extends State<Home> {
             SizedBox(height: ScreenSize.height * .01,),
             Container(
               decoration: BoxDecoration(
-                  color: Color(0xffD9D9D9),
-                  borderRadius: BorderRadius.circular(10)
+                  color: Color(0xffD9D9D9).withOpacity(.4),
+                  borderRadius: BorderRadius.circular(18)
               ),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 12),
+                    padding: const EdgeInsets.symmetric(vertical: 14,horizontal: 18),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -93,7 +94,8 @@ class _HomeState extends State<Home> {
                     ),
                   ),
 
-                  Image.asset(AppImage.dummy,height: ScreenSize.height * .14,)
+                  Image.asset(AppImage.dummy,height: ScreenSize.height * .14,),
+                  SizedBox(width: 0,),
                 ],
               ),
             ),
@@ -111,8 +113,8 @@ class _HomeState extends State<Home> {
                   shrinkWrap: true,
                   padding: EdgeInsets.zero,
                   itemBuilder: (context, index) {
-                    final isSelected  = _controller.selectedIndex.value == index;
                     return Obx((){
+                      final isSelected  = _controller.selectedIndex.value == index;
                       return InkWell(
                         onTap: (){
                           _controller.selectedIndex.value = index;
@@ -146,6 +148,71 @@ class _HomeState extends State<Home> {
                     });
                   }),
             ),
+            SizedBox(height: 20,),
+            GridView.builder(
+                itemCount: 6,
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                physics: NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.70,
+                  mainAxisSpacing: 20,
+                  crossAxisSpacing: 16,
+                ), itemBuilder: (context,index){
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                 Obx((){
+                   final isSelected = _controller.selectedFav.value == index;
+                   return  Container(
+                     decoration: BoxDecoration(
+                       color: Colors.grey.shade300,
+                       borderRadius: BorderRadius.circular(16),
+                     ),
+                     child: Stack(
+                       children: [
+                         Image.asset(AppImage.shirt),
+                         Positioned(
+                           right: 10,
+                           top: 10,
+                           child: InkWell(
+                             onTap: (){
+                               _controller.selectedFav.value =
+                               isSelected ? -1 : index;
+                             },
+                             child: Container(
+                               decoration: BoxDecoration(
+                                   borderRadius: BorderRadius.circular(10),
+                                   color: Colors.white
+                               ),
+                               padding: EdgeInsets.all(10),
+                               child: SvgPicture.asset(AppImage.fav,color: isSelected ? Colors.red : Colors.black,)
+                             ),
+                           ),
+                         ),
+
+                       ],
+                     ),
+                   );
+                 }),
+                  SizedBox(height: 10,),
+                  Text('Beige Oversized T-Shirt',style: TextStyle(
+                    fontSize: 14,fontWeight: FontWeight.w500,
+                  ),),
+                  SizedBox(height: 4,),
+                  Row(
+                    spacing: 4,
+                    children: [
+                      Text('Rs. 1,190',style: TextStyle(fontWeight: FontWeight.w500,color: Colors.grey)),
+                      if(index == 1)
+                      Text('50%OFF',style: TextStyle(fontWeight: FontWeight.w500,color: Colors.red)),
+                    ],
+                  ),
+                ],
+              );
+            })
+
           ],
         ),
       ),

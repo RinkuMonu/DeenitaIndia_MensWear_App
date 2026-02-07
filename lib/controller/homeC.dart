@@ -19,6 +19,7 @@ class HomeC extends GetxController{
   var isLoadingUpdate = false.obs;
 
   RxInt selectedIndex = 0.obs;
+  RxInt selectedFav = 0.obs;
   late ScrollController bannerScrollController;
   Rx<BannerModel> model = BannerModel().obs;
   final Rx<ProfileModel> profileModel = ProfileModel().obs;

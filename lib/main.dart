@@ -23,10 +23,10 @@ class MyApp extends StatelessWidget {
         },
         title: 'Deenita',
         debugShowCheckedModeBanner: false,
-        // theme: ThemeData(
-        //  // primarySwatch: Colors.blue,
-        //   fontFamily: 'Alexandria',
-        // ),
+        theme: ThemeData(
+         // primarySwatch: Colors.blue,
+          fontFamily: 'Alexandria',
+        ),
         home: const Splash(),
       ),
     );

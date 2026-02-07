@@ -277,12 +277,21 @@ class CommonTextField2 extends StatelessWidget {
       counterText: "",
       filled: true,
       fillColor: Colors.white,
-      hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+      hintStyle: const TextStyle(fontSize: 16, color: Colors.grey),
       enabledBorder: _border(Colors.grey.shade200),
       focusedBorder: _border(AppColors.primary),
       errorBorder: _border(Colors.red),
       suffixIcon: _buildSuffix(),
-      prefixIcon: preffix,
+      prefixIcon: SizedBox(
+        width: 40,
+        child: Center(
+          child: preffix
+        ),
+      ),
+      prefixIconConstraints: BoxConstraints(
+        minWidth: 15,
+        minHeight: 15,
+      )
     );
   }
 

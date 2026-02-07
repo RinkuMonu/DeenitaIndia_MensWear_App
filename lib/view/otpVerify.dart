@@ -10,6 +10,7 @@ import '../constants/textstyle.dart';
 import '../controller/loginC.dart';
 import '../widgets/button.dart';
 import '../widgets/textfield.dart';
+import 'bottomBar.dart';
 import 'forgotPassword.dart';
 import 'home.dart';
 
@@ -101,7 +102,7 @@ class _OtpVerifyViewState extends State<OtpVerifyView> {
               ),
               SizedBox(height: ScreenSize.height * .03,),
               AppButton(title: 'Verify OTP', onTap: (){
-                Get.to(()=> Home());
+                Get.to(()=> BottomBar());
                 //_controller.validate();
               })
             ],
