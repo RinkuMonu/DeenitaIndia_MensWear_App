@@ -1,127 +1,87 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
+import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:deenitaindia/constants/image.dart';
-import 'package:deenitaindia/view/profile.dart';
 import 'package:deenitaindia/view/setting.dart';
-import 'package:deenitaindia/view/wishlist.dart';
+import 'package:deenitaindia/view/searchScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../controller/bottomNavC.dart';
-import '../widgets/painter.dart';
 import 'cart.dart';
 import 'home.dart';
 
-class BottomBar extends StatefulWidget {
-  const BottomBar({super.key});
+class BottomBar extends StatelessWidget {
+  BottomBar({super.key});
 
-  @override
-  State<BottomBar> createState() => _BottomBarState();
-}
+  final BottomNavC controller = Get.put(BottomNavC());
 
-class _BottomBarState extends State<BottomBar> {
-  final controller = Get.put(BottomNavC());
-  int _currentIndex = 0;
-
-  final labels = ['Home', 'Search', 'Category', 'Cart', 'Account'];
-  final icons = [
-    SvgPicture.asset(AppImage.home),
-    SvgPicture.asset(AppImage.search),
-    SvgPicture.asset(AppImage.more),
-    SvgPicture.asset(AppImage.cart),
-    SvgPicture.asset(AppImage.user),
-  ];
-  final  _pages = const [
+  final List<Widget> pages = const [
     Home(),
-    Wishlist(),
-    Center(child: Text('Search')),
+    SearchScreen(),
+    Center(child: Text('Category')),
     CartView(),
     Setting(),
   ];
+
+  final List<String> labels = [
+    'Home',
+    'Wishlist',
+    'Category',
+    'Cart',
+    'Account',
+  ];
+
+  final List<String> icons = [
+    AppImage.home,
+    AppImage.search,
+    AppImage.more,
+    AppImage.cart,
+    AppImage.user,
+  ];
+
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery
-        .of(context)
-        .size
-        .width;
-    return Scaffold(
+    return Obx(() {
+      return Scaffold(
         backgroundColor: Colors.white,
-        body: _pages[_currentIndex],
-        bottomNavigationBar: Obx(() {
-          final itemWidth = width / icons.length;
-          final centerX = itemWidth * controller.index.value + itemWidth / 2;
+        body: Padding(
+          padding: const EdgeInsets.only(bottom: 16.0),
+          child: pages[controller.index.value],
+        ),
 
-          return SizedBox(
-            height: 95,
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                CustomPaint(
-                  size: Size(width, 70),
-                  painter: NavPainter(centerX),
-                ),
+        bottomNavigationBar: CurvedNavigationBar(
+          animationCurve: Curves.decelerate,
+          index: controller.index.value,
+          height: 65,
+          backgroundColor: Colors.grey.shade100,
+          color: Colors.white,
+          animationDuration: const Duration(milliseconds: 300),
+          items: List.generate(icons.length, (i) {
+            final bool isSelected = controller.index.value == i;
 
-                // Floating Active Icon
-                Positioned(
-                  bottom: 40,
-                  left: centerX - 30,
-                  child: Container(
-                    height: 60,
-                    width: 60,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 8,
-                        )
-                      ],
-                    ),
-                    child: icons[controller.index.value],
-                  ),
+            return CurvedNavigationBarItem(
+              child: SvgPicture.asset(
+                icons[i],
+                height: 22,
+                colorFilter: ColorFilter.mode(
+                  isSelected ? Colors.black : Colors.grey,
+                  BlendMode.srcIn,
                 ),
+              ),
+              label: labels[i],
+              labelStyle: TextStyle(
+                fontSize: 11,
+                fontWeight:
+                isSelected ? FontWeight.w600 : FontWeight.w400,
+                color: isSelected ? Colors.black : Colors.grey,
+              ),
+            );
+          }),
 
-                // Nav Items
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Row(
-                    children: List.generate(icons.length, (i) {
-                      final active = controller.index.value == i;
-                      return Expanded(
-                        child: GestureDetector(
-                          onTap: () => controller.change(i),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SizedBox(height: active ? 40 : 0),
-                              icons[controller.index.value],
-                              const SizedBox(height: 4),
-                              Text(
-                                labels[i],
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color:
-                                  active ? Colors.black : Colors.grey,
-                                  fontWeight: active
-                                      ? FontWeight.w600
-                                      : FontWeight.w400,
-                                ),
-                              ),
-                              const SizedBox(height: 6),
-                            ],
-                          ),
-                        ),
-                      );
-                    }),
-                  ),
-                ),
-              ],
-            ),
-          );
-        })
-    );
+          onTap: controller.change,
+        ),
+      );
+    });
   }
 }
