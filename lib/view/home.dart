@@ -4,6 +4,7 @@ import 'package:deenitaindia/constants/image.dart';
 import 'package:deenitaindia/constants/textstyle.dart';
 import 'package:deenitaindia/view/search.dart';
 import 'package:deenitaindia/view/setting.dart';
+import 'package:deenitaindia/view/wishlistScreen.dart';
 import 'package:deenitaindia/widgets/textfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +48,9 @@ class _HomeState extends State<Home> {
                   style: AppTextStyles.alexandria32Secondary,
                 ),
                 Spacer(),
-                topIcons(icon: AppImage.fav, onIconTap: () {}),
+                topIcons(icon: AppImage.fav, onIconTap: () {
+                  Get.to(()=>WishlistScreen());
+                }),
                 SizedBox(width: 16),
                 topIcons(icon: 'assets/icons/bell.svg', onIconTap: () {}),
               ],
@@ -58,7 +61,7 @@ class _HomeState extends State<Home> {
                 Expanded(
                   child: CommonTextField2(
                     controller: searchController,
-                    readOnly: true,
+                    //readOnly: true,
                     onTap: (){
                       Get.to(()=>Search());
                     },

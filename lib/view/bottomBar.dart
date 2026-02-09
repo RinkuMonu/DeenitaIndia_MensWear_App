@@ -1,8 +1,8 @@
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:deenitaindia/constants/image.dart';
+import 'package:deenitaindia/view/search.dart';
 import 'package:deenitaindia/view/setting.dart';
-import 'package:deenitaindia/view/searchScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -18,7 +18,7 @@ class BottomBar extends StatelessWidget {
 
   final List<Widget> pages = const [
     Home(),
-    SearchScreen(),
+    Search(),
     Center(child: Text('Category')),
     CartView(),
     Setting(),

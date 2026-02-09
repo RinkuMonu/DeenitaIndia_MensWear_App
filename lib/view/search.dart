@@ -3,8 +3,11 @@ import 'package:deenitaindia/constants/textstyle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 import '../constants/image.dart';
+import '../controller/searchC.dart';
+import '../widgets/customAppBar.dart';
 import '../widgets/textfield.dart';
 
 
@@ -16,20 +19,25 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
-  final searchController = SearchController();
+  final controller = Get.put(SearchC());
 
   List text = ['Jeans','Casual clothes','V-neck tshirt','Winter clothes'];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(),
+      appBar: const CustomAppBar(
+        title: "Search",
+        showMenu: false,
+        appBarBgColor: Colors.white,
+        showWishlist: false,
+      ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 0),
         child: Column(
           children: [
             CommonTextField2(
-              controller: searchController,
+              controller: controller.searchController,
               readOnly: false,
               hint: 'Search for clothes...',
               preffix: SvgPicture.asset(
@@ -43,11 +51,19 @@ class _SearchState extends State<Search> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Recent Searches',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
-                Text('Clear all',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,decoration: TextDecoration.underline)),
+                InkWell(
+                    onTap: (){
+                      controller.recentSearch.value = false;
+                    },
+                    child: Text('Clear all',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,decoration: TextDecoration.underline))),
               ],
             ),
             SizedBox(height: 20,),
-            searchList()
+            Obx((){
+              return  Visibility(
+                  visible: controller.recentSearch.value,
+                  child: searchList());
+            })
           ],
         ),
       ),

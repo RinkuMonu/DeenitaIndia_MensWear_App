@@ -1,6 +1,8 @@
+import 'package:deenitaindia/constants/image.dart';
 import 'package:deenitaindia/view/wishlistScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../constants/colors.dart';
@@ -86,16 +88,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 children: actions!,
               )
                   : showWishlist
-                  ? _iconButton(
-                CupertinoIcons.heart,
+                  ? _actionButton(
                     () => Get.to(() => WishlistScreen()),
+                AppImage.fav
               )
                   : showNotification
-                  ? _iconButton(
-                CupertinoIcons.bell,
+                  ? _actionButton(
                 onNotificationTap ??
                         () => Get.to(
                             () => const NotificationScreen()),
+                  'assets/icons/bell.svg'
               )
                   : const SizedBox.shrink(),
             ),
@@ -138,6 +140,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return IconButton(
       icon: Icon(icon, color: iconColor, size: 24),
       onPressed: onTap,
+    );
+  }
+  Widget _actionButton(VoidCallback onTap,String image) {
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.only(right: 10),
+        child: SvgPicture.asset(image,color: iconColor,),
+      ),
     );
   }
 }
