@@ -17,6 +17,7 @@ class HomeC extends GetxController{
   final lastName = TextEditingController();
   var isLoading = false.obs;
   var isLoadingUpdate = false.obs;
+  final searchController = SearchController();
 
   RxInt selectedIndex = 0.obs;
   RxInt selectedFav = 0.obs;
@@ -67,41 +68,14 @@ class HomeC extends GetxController{
     }
     return null;
   }
-  Future<ProfileModel?> getProfile() async {
 
-    try {
-      isLoading.value = true;
-
-
-      final response = await Apiservices().getRequest(
-        ApiUrl.userInfo,
-      );
-      log('status Code : ${response.statusCode}');
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        log('Response after success : ${response.data}');
-        isLoading.value = false;
-        profileModel.value = ProfileModel.fromJson(response.data);
-        mobile.text = profileModel.value.user!.mobile.toString();
-        email.text = profileModel.value.user!.email.toString();
-        firstName.text = profileModel.value.user!.firstName ?? '';
-        lastName.text = profileModel.value.user!.lastName!.capitalize ?? '';
-        address.text = profileModel.value.user!.address.toString();
-        name.value = '${firstName.text} ${lastName.text}';
-        print('NAME ::::  ${name.value}');
-
-      } else {
-        isLoading.value = false;
-        showSnackBar(title: "Failed", message: response.data['message'] ?? 'Something went wrong', context: Get.context!, error: 'error');
-
-      }
-    } catch (e,stackTrace) {
-      isLoading.value = false;
-      log("❌ API Error: $e");
-      log("📄 StackTrace: $stackTrace");
-      showSnackBar(title: "Failed", message: e.toString(), context: Get.context!, error: 'error');
-
-    }
-    return null;
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    searchController.dispose();
   }
+
+
 
 }

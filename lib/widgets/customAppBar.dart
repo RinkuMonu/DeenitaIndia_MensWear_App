@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../constants/colors.dart';
+import '../controller/bottomNavC.dart';
 import '../view/notificationScreen.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -70,7 +71,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   )
                       : _iconButton(
                     CupertinoIcons.arrow_left,
-                    Get.back,
+                    (){
+                      _handleBackNavigation(context);
+                    },
                   )),
             ),
 
@@ -103,6 +106,25 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
     );
+  }
+
+
+  void _handleBackNavigation(BuildContext context) {
+    final titleLower = title?.toLowerCase() ?? "";
+
+    // Special navigation for 3 specific screens: History, Services, Profile
+    if (titleLower == "search" ||
+        titleLower == "category" ||
+        titleLower == "cart"||
+        titleLower == "profile") {
+      // Navigate back to home tab (index 0)
+      Get.find<BottomNavC>().change(0);
+    } else {
+      // Normal back navigation for all other screens
+      if (Navigator.canPop(context)) {
+        Get.back();
+      }
+    }
   }
 
   // ───────────────── TITLE ─────────────────

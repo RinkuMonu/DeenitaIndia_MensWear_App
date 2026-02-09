@@ -2,8 +2,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:deenitaindia/constants/colors.dart';
 import 'package:deenitaindia/constants/image.dart';
 import 'package:deenitaindia/constants/textstyle.dart';
+import 'package:deenitaindia/view/notificationScreen.dart';
 import 'package:deenitaindia/view/search.dart';
 import 'package:deenitaindia/view/setting.dart';
+import 'package:deenitaindia/view/wishlistScreen.dart';
 import 'package:deenitaindia/widgets/textfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,7 @@ import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 
 import '../constants/size.dart';
+import '../controller/bottomNavC.dart';
 import '../controller/homeC.dart';
 import '../model/bannerM.dart';
 import '../utils/api_url.dart';
@@ -26,7 +29,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final _controller = Get.put(HomeC());
-  final searchController = SearchController();
 
   List textList = ['All', 'Tshirts', 'Jeans', 'Shirts', 'Jackect'];
   @override
@@ -47,103 +49,37 @@ class _HomeState extends State<Home> {
                   style: AppTextStyles.alexandria32Secondary,
                 ),
                 Spacer(),
-                topIcons(icon: AppImage.fav, onIconTap: () {}),
+                topIcons(icon: AppImage.fav, onIconTap: () {
+                  Get.to(() => WishlistScreen());
+                }),
                 SizedBox(width: 16),
-                topIcons(icon: 'assets/icons/bell.svg', onIconTap: () {}),
+                topIcons(icon: 'assets/icons/bell.svg', onIconTap: () {
+                  Get.to(() => NotificationScreen());
+                }),
               ],
             ),
             SizedBox(height: ScreenSize.height * .01),
-            Row(
-              children: [
-                Expanded(
-                  child: CommonTextField2(
-                    controller: searchController,
-                    readOnly: true,
-                    onTap: (){
-                      Get.to(()=>Search());
-                    },
-                    hint: 'Search for clothes...',
-                    preffix: SvgPicture.asset(
-                      AppImage.search,
-                      height: 28,
-                      width: 28,
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10),
-                Container(
-                  width: 60,
-                  decoration: BoxDecoration(
-                    color: AppColors.secondary,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 6, vertical: 14),
-                  child: Icon(Icons.tune, color: Colors.white),
-                ),
-              ],
-            ),
-            SizedBox(height: ScreenSize.height * .01),
-            Container(
-              decoration: BoxDecoration(
-                color: Color(0xffD9D9D9).withOpacity(.4),
-                borderRadius: BorderRadius.circular(18),
+            CommonTextField2(
+              controller: _controller.searchController,
+              readOnly: true,
+              showCursor: false,
+              onTap: (){
+                Get.find<BottomNavC>().change(1);
+              },
+              hint: 'Search for clothes...',
+              preffix: SvgPicture.asset(
+                AppImage.search,
+                height: 28,
+                width: 28,
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 14,
-                      horizontal: 18,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Shop wit us!',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        SizedBox(height: 6),
-                        Text(
-                          'Get 50% Off for\nall items',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20,
-                            fontFamily: 'Poppins',
-                          ),
-                        ),
-                        SizedBox(height: 6),
-                        Row(
-                          children: [
-                            Text(
-                              'Shop Now',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 12,
-                                fontFamily: 'Poppins',
-                              ),
-                            ),
-                            SizedBox(width: 10),
-                            Icon(Icons.arrow_right_alt),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+            ),
 
-                  Image.asset(AppImage.dummy, height: ScreenSize.height * .14),
-                  SizedBox(width: 0),
-                ],
-              ),
-            ),
+            SizedBox(height: ScreenSize.height * .01),
+            Image.asset(AppImage.homeBanner, height: 160,fit: BoxFit.cover,),
 
             SizedBox(height: ScreenSize.height * .022),
 
-            Container(
-              //color: Colors.red,
+            SizedBox(
               height: ScreenSize.height * .04,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -177,12 +113,12 @@ class _HomeState extends State<Home> {
                         child: Padding(
                           padding: EdgeInsets.symmetric(
                             horizontal: 20,
-                            vertical: 8,
+                            vertical: 4,
                           ),
                           child: Text(
                             textList[index],
                             style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 14,
                               fontWeight: FontWeight.w400,
                               fontFamily: 'Alexandria',
                               color: isSelected ? Colors.white : Colors.black,
@@ -239,7 +175,7 @@ class _HomeState extends State<Home> {
                                   child: isSelected
                                       ? Icon(
                                           CupertinoIcons.heart_fill,
-                                          color: Color(0xffED1010),
+                                          color: Colors.pinkAccent,
                                         )
                                       : Icon(CupertinoIcons.heart),
                                 ),
@@ -282,6 +218,8 @@ class _HomeState extends State<Home> {
                 );
               },
             ),
+            SizedBox(height: 100),
+
           ],
         ),
       ),

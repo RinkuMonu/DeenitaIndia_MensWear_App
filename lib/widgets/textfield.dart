@@ -185,6 +185,7 @@ class CommonTextField2 extends StatelessWidget {
   final bool obscureText;
   final int? maxLength;
   final bool readOnly;
+  final bool showCursor;
   final Widget? preffix;
   final VoidCallback? onToggleVisibility;
   final VoidCallback? onTap;
@@ -199,6 +200,7 @@ class CommonTextField2 extends StatelessWidget {
     //required this.errorNotifier,
     this.mainController,
     this.focusNode,
+    this.showCursor = true,
     this.readOnly = false,
     this.label,
     this.obscureText = false,
@@ -234,6 +236,7 @@ class CommonTextField2 extends StatelessWidget {
             maxLength: maxLength,
             cursorColor: Colors.black,
             readOnly: readOnly,
+            showCursor: showCursor,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             keyboardType: _getKeyboardType(),
             textCapitalization: hint.contains("PAN Card Number")

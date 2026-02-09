@@ -27,7 +27,7 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     ScreenSize.init(context);
     return  Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       body: Column(
         children: [
          /* Center(
@@ -49,7 +49,7 @@ class _SplashState extends State<Splash> {
               ),
             ),
           ),*/
-          Image.asset(AppImage.splash,)
+          Image.asset(AppImage.splash, fit: BoxFit.cover,)
         ],
       ),
     );

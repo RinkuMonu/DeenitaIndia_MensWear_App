@@ -1,8 +1,8 @@
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:deenitaindia/constants/image.dart';
+import 'package:deenitaindia/view/search.dart';
 import 'package:deenitaindia/view/setting.dart';
-import 'package:deenitaindia/view/searchScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -18,7 +18,7 @@ class BottomBar extends StatelessWidget {
 
   final List<Widget> pages = const [
     Home(),
-    SearchScreen(),
+    Search(),
     Center(child: Text('Category')),
     CartView(),
     Setting(),
@@ -26,7 +26,7 @@ class BottomBar extends StatelessWidget {
 
   final List<String> labels = [
     'Home',
-    'Wishlist',
+    'Search',
     'Category',
     'Cart',
     'Account',
@@ -44,42 +44,44 @@ class BottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       return Scaffold(
-        backgroundColor: Colors.white,
+        extendBody: true,
+        // backgroundColor: Colors.white,
         body: Padding(
           padding: const EdgeInsets.only(bottom: 16.0),
           child: pages[controller.index.value],
         ),
 
-        bottomNavigationBar: CurvedNavigationBar(
-          animationCurve: Curves.decelerate,
-          index: controller.index.value,
-          height: 65,
-          backgroundColor: Colors.grey.shade100,
-          color: Colors.white,
-          animationDuration: const Duration(milliseconds: 300),
-          items: List.generate(icons.length, (i) {
-            final bool isSelected = controller.index.value == i;
-
-            return CurvedNavigationBarItem(
-              child: SvgPicture.asset(
-                icons[i],
-                height: 22,
-                colorFilter: ColorFilter.mode(
-                  isSelected ? Colors.black : Colors.grey,
-                  BlendMode.srcIn,
+        bottomNavigationBar: Container(
+          color: Colors.grey.shade50,
+          child: CurvedNavigationBar(
+            index: controller.index.value,
+            height: 65,
+            // backgroundColor: Colors.blueGrey.shade50,
+            color: Colors.white,
+            animationDuration: const Duration(milliseconds: 300),
+            items: List.generate(icons.length, (i) {
+              final bool isSelected = controller.index.value == i;
+              return CurvedNavigationBarItem(
+                child: SvgPicture.asset(
+                  icons[i],
+                  height: 22,
+                  colorFilter: ColorFilter.mode(
+                    isSelected ? Colors.black : Colors.grey,
+                    BlendMode.srcIn,
+                  ),
                 ),
-              ),
-              label: labels[i],
-              labelStyle: TextStyle(
-                fontSize: 11,
-                fontWeight:
-                isSelected ? FontWeight.w600 : FontWeight.w400,
-                color: isSelected ? Colors.black : Colors.grey,
-              ),
-            );
-          }),
+                label: labels[i],
+                labelStyle: TextStyle(
+                  fontSize: 11,
+                  fontWeight:
+                  isSelected ? FontWeight.w600 : FontWeight.w400,
+                  color: isSelected ? Colors.black : Colors.grey,
+                ),
+              );
+            }),
 
-          onTap: controller.change,
+            onTap: controller.change,
+          ),
         ),
       );
     });
