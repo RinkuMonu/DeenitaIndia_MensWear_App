@@ -103,7 +103,7 @@ class _OtpVerifyViewState extends State<OtpVerifyView> {
               ),
               SizedBox(height: ScreenSize.height * .03,),
               AppButton(title: 'Verify OTP', onTap: (){
-                Get.to(()=> BottomBar());
+                Get.offAll(()=> BottomBar());
                 //_controller.validate();
               })
             ],

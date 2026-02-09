@@ -36,5 +36,6 @@ class AppImage {
 
   static const String emptyNotification = "assets/image/blankNotificationImage.svg";
   static const String emptyWishList = "assets/image/emptyWishlistImage.svg";
+  static const String cartImage = "assets/image/cartImage.png";
   static const String homeBanner = "assets/image/homeBanner.png";
 }
