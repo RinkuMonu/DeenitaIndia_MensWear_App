@@ -49,6 +49,7 @@ class _OtpVerifyViewState extends State<OtpVerifyView> {
   Widget build(BuildContext context) {
     ScreenSize.init(context);
     return  Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         body: _build()
     );
@@ -68,7 +69,7 @@ class _OtpVerifyViewState extends State<OtpVerifyView> {
               SizedBox(height: ScreenSize.height * .2,),
               Text('Login',style: AppTextStyles.alexandria32,),
               Text('We saved your spot',style: AppTextStyles.alexandria16w300,),
-              SizedBox(height: ScreenSize.height * .14,),
+              SizedBox(height: ScreenSize.height * .1,),
               //CommonTextField(controller: _controller.mobileC, hint: 'Enter your mobile number',label: 'Mobile Number',),
               Center(
                 child: Pinput(

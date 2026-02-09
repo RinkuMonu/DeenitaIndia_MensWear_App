@@ -1,5 +1,6 @@
 
 import 'package:deenitaindia/constants/textstyle.dart';
+import 'package:deenitaindia/widgets/customAppBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -26,11 +27,12 @@ class _SearchState extends State<Search> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
         title: "Search",
+        showNotification: true,
+        showWishlist: false,
         showMenu: false,
         appBarBgColor: Colors.white,
-        showWishlist: false,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 0),
