@@ -30,48 +30,13 @@ class HomeC extends GetxController{
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
-   // getBanner();
-    //getProfile();
+
   }
 
-  Future<BannerModel?> getBanner() async {
-
-    try {
-      isLoading.value = true;
-
-
-      final response = await Apiservices().getRequest(
-        '${ApiUrl.banner}?referenceWebsite=6968869bd31f93ad3cd05004&position=homepage-top',
-      );
-      log('status Code : ${response.statusCode}');
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        log('Response after success : ${response.data}');
-        isLoading.value = false;
-        final bannerResponse = BannerModel.fromJson(response.data);
-
-        model.value = bannerResponse;
-        topBanners.assignAll(bannerResponse.banners ?? []);
-        //topBanners.assignAll();
-      } else {
-        isLoading.value = false;
-        showSnackBar(title: "Failed", message: response.data['message'] ?? 'Something went wrong', context: Get.context!, error: 'error');
-
-      }
-    } catch (e,stackTrace) {
-      isLoading.value = false;
-      log("❌ API Error: $e");
-      log("📄 StackTrace: $stackTrace");
-      showSnackBar(title: "Failed", message: e.toString(), context: Get.context!, error: 'error');
-
-    }
-    return null;
-  }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     searchController.dispose();
   }

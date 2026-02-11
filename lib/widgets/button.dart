@@ -9,6 +9,7 @@ class AppButton extends StatelessWidget {
 
   final Color textColor;
   final bool isPressed;
+  final bool isIconShow;
   final double radius;
   final bool isOutlined; // ✅ Added flag
 
@@ -17,9 +18,10 @@ class AppButton extends StatelessWidget {
     required this.title,
     required this.onTap,
     this.radius = 12,
+    this.isIconShow = false,
     this.bgColor = AppColors.primary,
     // this.bgColor = AppColors.secondaryColor,
-    this.textColor = Colors.grey,
+    this.textColor = Colors.white,
     this.isPressed = false,
     this.isOutlined = false, // ✅ Default false
     SizedBox? child,
@@ -54,33 +56,28 @@ class AppButton extends StatelessWidget {
           ),
 
           /// 🔥 ONLY THIS PART CHANGED
-          child: Stack(
-            alignment: Alignment.center,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               /// BUTTON TEXT (UNCHANGED)
               Text(
                 title,
                 style: TextStyle(
-                  color: Colors.white,
+                  color:  textColor,
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
                 ),
               ),
+              SizedBox(width: 10,),
 
-              /// 🎅 RUNNING SANTA (CHRISTMAS THEME)
-              // Positioned(
-              //   right: 5,
-              //   child: SizedBox(
-              //     height: 60,
-              //     width: 60,
-              //     child: Lottie.asset(
-              //       'assets/json/Merry Christmas.json',
-              //       repeat: true,
-              //       fit: BoxFit.contain,
-              //     ),
-              //   ),
-              // ),
-            ],
+              if(isIconShow)
+                Icon(
+                  Icons.arrow_forward,
+                  color: Colors.white,
+
+                )
+
+             ],
           ),
         ),
       ),

@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 
 import '../controller/bottomNavC.dart';
 import 'cart.dart';
+import 'categoryScreen.dart';
 import 'home.dart';
 
 class BottomBar extends StatelessWidget {
@@ -19,7 +20,7 @@ class BottomBar extends StatelessWidget {
   final List<Widget> pages = const [
     Home(),
     Search(),
-    Center(child: Text('Category')),
+    CategoryScreen(),
     CartView(),
     Setting(),
   ];

@@ -3,6 +3,7 @@ import 'package:deenitaindia/constants/colors.dart';
 import 'package:deenitaindia/constants/image.dart';
 import 'package:deenitaindia/constants/textstyle.dart';
 import 'package:deenitaindia/view/notificationScreen.dart';
+import 'package:deenitaindia/view/productDetailScreen.dart';
 import 'package:deenitaindia/view/search.dart';
 import 'package:deenitaindia/view/setting.dart';
 import 'package:deenitaindia/view/wishlistScreen.dart';
@@ -18,6 +19,7 @@ import '../controller/bottomNavC.dart';
 import '../controller/homeC.dart';
 import '../model/bannerM.dart';
 import '../utils/api_url.dart';
+import '../widgets/completeProfilePopup.dart';
 import '../widgets/container.dart';
 
 class Home extends StatefulWidget {
@@ -31,6 +33,18 @@ class _HomeState extends State<Home> {
   final _controller = Get.put(HomeC());
 
   List textList = ['All', 'Tshirts', 'Jeans', 'Shirts', 'Jackect'];
+
+
+  @override
+  void initState(){
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showCompleteProfilePopup(context);
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     ScreenSize.init(context);
@@ -75,7 +89,7 @@ class _HomeState extends State<Home> {
             ),
 
             SizedBox(height: ScreenSize.height * .01),
-            Image.asset(AppImage.homeBanner, height: 160,fit: BoxFit.cover,),
+            Image.asset(AppImage.homeBanner, height: 160,fit: BoxFit.cover,width: double.maxFinite,),
 
             SizedBox(height: ScreenSize.height * .022),
 
@@ -94,6 +108,7 @@ class _HomeState extends State<Home> {
                         _controller.selectedIndex.value = index;
                       },
                       child: Container(
+                        alignment: Alignment.center,
                         margin: EdgeInsets.only(left: 10),
                         decoration: BoxDecoration(
                           color: isSelected
@@ -149,39 +164,44 @@ class _HomeState extends State<Home> {
                   children: [
                     Obx(() {
                       final isSelected = _controller.selectedFav.value == index;
-                      return Container(
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade300,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: Stack(
-                          children: [
-                            Image.asset(AppImage.shirt),
-                            Positioned(
-                              right: 10,
-                              top: 10,
-                              child: InkWell(
-                                onTap: () {
-                                  _controller.selectedFav.value = isSelected
-                                      ? -1
-                                      : index;
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.white,
+                      return InkWell(
+                        onTap: (){
+                          Get.to(() => ProductDetailScreen());
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade300,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Stack(
+                            children: [
+                              Image.asset(AppImage.shirt),
+                              Positioned(
+                                right: 10,
+                                top: 10,
+                                child: InkWell(
+                                  onTap: () {
+                                    _controller.selectedFav.value = isSelected
+                                        ? -1
+                                        : index;
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.white,
+                                    ),
+                                    padding: EdgeInsets.all(10),
+                                    child: isSelected
+                                        ? Icon(
+                                            CupertinoIcons.heart_fill,
+                                            color: Colors.pinkAccent,
+                                          )
+                                        : Icon(CupertinoIcons.heart),
                                   ),
-                                  padding: EdgeInsets.all(10),
-                                  child: isSelected
-                                      ? Icon(
-                                          CupertinoIcons.heart_fill,
-                                          color: Colors.pinkAccent,
-                                        )
-                                      : Icon(CupertinoIcons.heart),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       );
                     }),
@@ -212,6 +232,26 @@ class _HomeState extends State<Home> {
                               color: Colors.red,
                             ),
                           ),
+
+                        Spacer(),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                              size: 15,
+                            ),
+
+                            Text(
+                              "4.5k",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 10
+                              ),
+                            )
+                          ],
+                        )
                       ],
                     ),
                   ],

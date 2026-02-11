@@ -10,6 +10,7 @@ class CommonTextField extends StatelessWidget {
   final TextEditingController controller;
   final String? label;
   final String hint;
+  final bool readOnly;
   final bool obscureText;
   final int? maxLength;
   final VoidCallback? onToggleVisibility;
@@ -26,6 +27,7 @@ class CommonTextField extends StatelessWidget {
     this.focusNode,
     this.label,
     this.obscureText = false,
+    this.readOnly = false,
     this.maxLength,
     this.onToggleVisibility,
     this.suffix,
@@ -53,8 +55,7 @@ class CommonTextField extends StatelessWidget {
             maxLength: maxLength,
             cursorColor: Colors.black,
             style: TextStyle(color: Colors.grey,fontSize: 16,fontWeight: FontWeight.w500),
-            readOnly: hint.contains('Enter email') &&
-                mainController?.isEmailVerified?.value == true,
+            readOnly: readOnly,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             keyboardType: _getKeyboardType(),
             textCapitalization: hint.contains("PAN Card Number")
@@ -286,7 +287,7 @@ class CommonTextField2 extends StatelessWidget {
       fillColor: Colors.white,
       hintStyle: const TextStyle(fontSize: 16, color: Colors.grey),
       enabledBorder: _border(Colors.grey.shade200),
-      focusedBorder: _border(AppColors.primary),
+      focusedBorder: _border(AppColors.secondary),
       errorBorder: _border(Colors.red),
       suffixIcon: _buildSuffix(),
       prefixIcon: SizedBox(

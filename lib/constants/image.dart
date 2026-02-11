@@ -36,6 +36,18 @@ class AppImage {
 
   static const String emptyNotification = "assets/image/blankNotificationImage.svg";
   static const String emptyWishList = "assets/image/emptyWishlistImage.svg";
+  static const String emptyCart = "assets/image/emptyCart.svg";
+  static const String emptyOrders = "assets/image/emptyOrders.svg";
   static const String cartImage = "assets/image/cartImage.png";
   static const String homeBanner = "assets/image/homeBanner.png";
+  static const String filterIcon = "assets/image/proicons_filter.svg";
+  static const String address = "assets/image/Address.svg";
+  static const String bell = "assets/image/Bell.svg";
+  static const String box = "assets/image/Box.svg";
+  static const String card = "assets/image/Card.svg";
+  static const String detail = "assets/image/Details.svg";
+  static const String headPhones = "assets/image/Headphones.svg";
+  static const String logoOut = "assets/image/Logout.svg";
+  static const String questions = "assets/image/Question.svg";
+  static const String productDetailImage = "assets/image/detailProductImage.png";
 }

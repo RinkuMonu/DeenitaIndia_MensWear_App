@@ -1,10 +1,14 @@
+import 'package:deenitaindia/constants/image.dart';
 import 'package:deenitaindia/constants/textstyle.dart';
 import 'package:deenitaindia/view/profile.dart';
+import 'package:deenitaindia/widgets/customAppBar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../constants/size.dart';
+import 'myOrders.dart';
 
 class Setting extends StatefulWidget {
   const Setting({super.key});
@@ -17,70 +21,154 @@ class _SettingState extends State<Setting> {
   @override
   Widget build(BuildContext context) {
     ScreenSize.init(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: const CustomAppBar(
+        title: "Account",
+        showMenu: false,
+        showNotification: true,
+        showWishlist: false,
+      ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 10),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: ScreenSize.height * .06,),
-          Text('Settings',style: AppTextStyles.raleWayBold28,),
-            SizedBox(height: ScreenSize.height * .03,),
-            Text('Personal',style: AppTextStyles.raleWayBold20,),
-            SizedBox(height: ScreenSize.height * .03,),
-            _buildContent(text: 'Profile', onTap: () { Get.to(()=> Profile());}),
-            _buildContent(text: 'Shipping Address', onTap: () {  }),
-            _buildContent(text: 'Payment Methods', onTap: () {  }),
-            SizedBox(height: ScreenSize.height * .03,),
-            //2_buildContent(text: 'Country', onTap: () {  }),
-            //_buildContent(text: 'Currency', onTap: () {  }),
+            const SizedBox(height: 12),
 
+            SettingTile(
+              title: 'My Orders',
+              icon: AppImage.box,
+              onTap: () {
+                Get.to(() => MyOrders());
+              },
+            ),
 
-            Text('Account',style: AppTextStyles.raleWayBold20,),
-            SizedBox(height: ScreenSize.height * .03,),
-            _buildContent(text: 'About Us', onTap: () {
-              openUrl('https://deenitaindia.com/about-us');
-            }),
-            _buildContent(text: 'Terms and Conditions', onTap: () {
-              openUrl('https://deenitaindia.com/terms-of-service');
-            }),
-            SizedBox(height: ScreenSize.height * .05,),
-            Text('Deenita India',style: AppTextStyles.raleWayBold20,),
-            Text('Version 1.0',style: AppTextStyles.nunitoSans10,),
+            _section([
+              SettingTile(
+                title: 'My Details',
+                icon: AppImage.detail,
+                onTap: () => Get.to(() => Profile()),
+              ),
+              SettingTile(
+                title: 'Address Book',
+                icon: AppImage.home, // replace if needed
+                onTap: () {},
+              ),
+              SettingTile(
+                title: 'Payment Methods',
+                icon: AppImage.card, // replace if needed
+                onTap: () {},
+              ),
+              SettingTile(
+                title: 'Notifications',
+                icon: AppImage.bell, // replace if needed
+                onTap: () {},
+              ),
+            ]),
+
+            _section([
+              SettingTile(
+                title: 'FAQs',
+                icon: AppImage.questions, // replace if needed
+                onTap: () {},
+              ),
+              SettingTile(
+                title: 'Help Center',
+                icon: AppImage.headPhones, // replace if needed
+                onTap: () {},
+              ),
+            ]),
+
+            _section([
+              SettingTile(
+                title: 'Logout',
+                icon: AppImage.logoOut,
+                titleColor: Colors.red,
+                arrowVisible: false,
+                onTap: () {},
+              ),
+            ]),
+
+            const SizedBox(height: 40),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildContent(
-  {required String text,
-  required VoidCallback onTap}
-      ){
+  Widget _section(List<Widget> children) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        GestureDetector(
-          onTap: onTap,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(text,style: AppTextStyles.nunitoSans16,),
-              Icon(Icons.arrow_forward_ios_outlined,color: Colors.grey,),
-            ],
-          ),
-        ),
-       // SizedBox(height: 10,),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Divider(color: Colors.grey.shade200,),
-        ),
+        const Divider(height: 24, thickness: 8, color: Color(0xFFF2F2F2)),
+        ...children,
       ],
     );
   }
-  Future<void> openUrl(String url) async {
-    final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) launchUrl(uri, mode: LaunchMode.externalApplication);
+}
+
+// =======================================================
+// Setting Tile (iOS-style)
+// =======================================================
+
+class SettingTile extends StatelessWidget {
+  final String title;
+  final String icon;
+  final VoidCallback onTap;
+  final Color? titleColor;
+  final bool arrowVisible;
+
+  const SettingTile({
+    super.key,
+    required this.title,
+    required this.icon,
+    required this.onTap,
+    this.titleColor,
+    this.arrowVisible = true,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+        child: Row(
+          children: [
+            SvgPicture.asset(
+              icon,
+              height: 22,
+              width: 22,
+              color: titleColor ?? Colors.black,
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Text(
+                title,
+                style: AppTextStyles.nunitoSans16.copyWith(
+                  color: titleColor ?? Colors.black,
+                ),
+              ),
+            ),
+            if (arrowVisible)
+              const Icon(
+                Icons.arrow_forward_ios,
+                size: 16,
+                color: Colors.grey,
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// =======================================================
+// URL Launcher
+// =======================================================
+
+Future<void> openUrl(String url) async {
+  final uri = Uri.parse(url);
+  if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+    debugPrint('Could not launch $url');
   }
 }
