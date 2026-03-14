@@ -27,6 +27,7 @@ class AppImage {
   static const String dummy = "assets/image/dummy.png";
 
   static const String shirt = "assets/image/shirt.png";
+  static const String tshirt = "assets/image/tshirt.png";
   static const String fav = "assets/icons/fav.svg";
   static const String cart = "assets/icons/Cart.svg";
   static const String home = "assets/icons/Home.svg";
@@ -39,7 +40,7 @@ class AppImage {
   static const String emptyCart = "assets/image/emptyCart.svg";
   static const String emptyOrders = "assets/image/emptyOrders.svg";
   static const String cartImage = "assets/image/cartImage.png";
-  static const String homeBanner = "assets/image/homeBanner.png";
+  static const String homeBanner = "assets/image/homebanner.png";
   static const String filterIcon = "assets/image/proicons_filter.svg";
   static const String address = "assets/image/Address.svg";
   static const String bell = "assets/image/Bell.svg";
@@ -50,4 +51,17 @@ class AppImage {
   static const String logoOut = "assets/image/Logout.svg";
   static const String questions = "assets/image/Question.svg";
   static const String productDetailImage = "assets/image/detailProductImage.png";
+  static const String statusfail = "assets/image/failStatus.png";
+  static const String statusSuccess = "assets/image/successStatus.png";
+  static const String brandCategoryBg = "assets/image/brandCategoryIconBg.png";
+  static const String vanture = "assets/image/vanture.png";
+  static const String ironWolf = "assets/image/ironWolf.png";
+  static const String urbanClad = "assets/image/urbanClad.png";
+  static const String homeLargeImage = "assets/image/homeLargeImage.png";
+  static const String limitedTimer = "assets/image/limitedOffer.png";
+  static const String offerMen = "assets/image/offermen.png";
+  static const String newArrival = "assets/image/newArrival.png";
+  static const String ocssionFit1 = "assets/image/unsplash_DGH1u80sZik (4).png";
+  static const String ocssionFit2 = "assets/image/unsplash_DGH1u80sZik (5).png";
+  static const String ocssionFit3 = "assets/image/unsplash_DGH1u80sZik (6).png";
 }

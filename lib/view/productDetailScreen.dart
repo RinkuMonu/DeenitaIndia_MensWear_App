@@ -33,6 +33,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         showMenu: false,
       ),
       body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -226,7 +227,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             )),
 
 
-            // 🔽 other product details here
           ],
         ),
       ),

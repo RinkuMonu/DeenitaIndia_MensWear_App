@@ -1,18 +1,20 @@
 import 'package:deenitaindia/controller/forgot_passwordC.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 
-import '../constants/colors.dart';
-import '../constants/image.dart';
-import '../constants/size.dart';
-import '../constants/textstyle.dart';
-import '../controller/loginC.dart';
-import '../widgets/button.dart';
-import '../widgets/textfield.dart';
-import 'bottomBar.dart';
+import '../../constants/colors.dart';
+import '../../constants/image.dart';
+import '../../constants/size.dart';
+import '../../constants/textstyle.dart';
+import '../../controller/loginC.dart';
+import '../../widgets/button.dart';
+import '../../widgets/otpPopup.dart';
+import '../../widgets/textfield.dart';
+import '../bottomBar.dart';
 import 'forgotPassword.dart';
-import 'home.dart';
+import '../home.dart';
 
 class OtpVerifyView extends StatefulWidget {
   const OtpVerifyView({super.key});
@@ -70,7 +72,16 @@ class _OtpVerifyViewState extends State<OtpVerifyView> {
               Text('Login',style: AppTextStyles.alexandria32,),
               Text('We saved your spot',style: AppTextStyles.alexandria16w300,),
               SizedBox(height: ScreenSize.height * .1,),
-              //CommonTextField(controller: _controller.mobileC, hint: 'Enter your mobile number',label: 'Mobile Number',),
+
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text("OTP Verification", style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),),
+              ),
+              SizedBox(height: 16,),
+
               Center(
                 child: Pinput(
                   length: 6,
@@ -101,11 +112,70 @@ class _OtpVerifyViewState extends State<OtpVerifyView> {
                   },
                 ),
               ),
+
+              SizedBox(height: 20,),
+
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  
+                  Text("Resend OTP", style: TextStyle(
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 13
+                  ),),
+
+
+                  Text("00:30", style: TextStyle(
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 13
+                  ),),
+                  
+                ],
+              ),
               SizedBox(height: ScreenSize.height * .03,),
               AppButton(title: 'Verify OTP', onTap: (){
-                Get.offAll(()=> BottomBar());
+                // Get.offAll(()=> BottomBar());
                 //_controller.validate();
-              })
+
+                showSuccessDialog(
+                  image: "assets/image/successStatus.png",
+                  // title: "All Done!",
+                  subtitle: "Your account has been created successfully.",
+                  onNext: () {
+                    Get.offAll(() => BottomBar());
+                  },
+                );
+
+                showSuccessDialog(
+                  image: "assets/image/failStatus.svg",
+                  // title: "All Done!",
+                  subtitle: "Your account has been created successfully.",
+                  onNext: () {
+                    Get.offAll(() => BottomBar());
+                  },
+                );
+              }),
+
+
+              SizedBox(height: ScreenSize.height * .03,),
+
+              Align(
+                alignment: Alignment.center,
+                child: InkWell(
+                  onTap: (){
+                    Get.back();
+                  },
+                  child: Text("Back", style: TextStyle(
+                      color: Colors.grey,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16
+                  ),),
+                ),
+              )
+
             ],
           ),
         ),
@@ -113,4 +183,11 @@ class _OtpVerifyViewState extends State<OtpVerifyView> {
       ],
     );
   }
+
+
+
+
+
+
+
 }

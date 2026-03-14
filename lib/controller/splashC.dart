@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../service/local_storage.dart';
-import '../view/onboarding.dart';
+import '../view/auth/onboarding.dart';
 
 class SplashC extends GetxController{
 

@@ -4,7 +4,7 @@ import '../constants/colors.dart';
 
 class AppButton extends StatelessWidget {
   final String title;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final Color bgColor;
 
   final Color textColor;

@@ -1,9 +1,14 @@
-import 'package:deenitaindia/view/splash.dart';
+import 'package:deenitaindia/service/locationServices.dart';
+import 'package:deenitaindia/view/auth/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toastification/toastification.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Get.putAsync(() => LocationServices().init());
+
   runApp(const MyApp());
 }
 

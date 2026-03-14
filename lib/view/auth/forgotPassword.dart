@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../constants/colors.dart';
-import '../constants/image.dart';
-import '../constants/size.dart';
-import '../constants/textstyle.dart';
-import '../controller/forgot_passwordC.dart';
-import '../widgets/button.dart';
-import '../widgets/textfield.dart';
+import '../../constants/colors.dart';
+import '../../constants/image.dart';
+import '../../constants/size.dart';
+import '../../constants/textstyle.dart';
+import '../../controller/forgot_passwordC.dart';
+import '../../widgets/button.dart';
+import '../../widgets/textfield.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
@@ -34,9 +34,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 //left: 0,
                   right: 0,
                 child: Image.asset(AppImage.bgVector7,fit: BoxFit.contain,height: ScreenSize.height * .18)),
-
-
-
 
             Container(
               height: double.maxFinite,

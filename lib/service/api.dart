@@ -6,7 +6,7 @@ import 'package:get/get.dart' hide MultipartFile, FormData, Response;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/api_url.dart';
-import '../view/login.dart';
+import '../view/auth/login.dart';
 import '../widgets/toast.dart';
 import 'local_storage.dart';
 

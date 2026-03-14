@@ -1,91 +1,143 @@
+import 'package:deenitaindia/view/auth/otpVerify.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../service/api.dart';
 import '../service/local_storage.dart';
 import '../utils/api_url.dart';
-import '../view/bottomBar.dart';
 import '../view/hello_card.dart';
-import '../view/home.dart';
-import '../view/login.dart';
 import '../widgets/toast.dart';
 
-class LoginC extends GetxController{
+class LoginC extends GetxController {
+
+  /// Controllers
   final emailC = TextEditingController();
   final mobileC = TextEditingController();
-  final nameC = TextEditingController();
   final passC = TextEditingController();
   final otpC = TextEditingController();
-  RxBool isLoading = false.obs;
 
+  /// States
+  RxBool isLoading = false.obs;
+  RxBool isPasswordHidden = true.obs;
+
+  /// 🔥 Toggle between Mobile & Email
+  RxBool isMobileSelected = true.obs;
+  RxBool isMobilePasswordSelected = false.obs;
+
+  void selectMobile() {
+    isMobileSelected.value = true;
+  }
+
+  void selectMobilePassword() {
+    isMobilePasswordSelected.toggle();
+  }
+
+  void selectEmail() {
+    isMobileSelected.value = false;
+    isMobilePasswordSelected.value = false;
+  }
+
+  /// ─────────────────────────────────────
+  /// EMAIL + PASSWORD LOGIN
+  /// ─────────────────────────────────────
   Future<void> loginWithPassword() async {
-    var email = emailC.text.trim();
-    var pass = passC.text.trim();
+    final email = emailC.text.trim();
+    final pass = passC.text.trim();
+
+    if (email.isEmpty || pass.isEmpty) {
+      showSnackBar(
+        title: '',
+        message: 'Email & Password required',
+        context: Get.context!,
+        error: 'error',
+      );
+      return;
+    }
+
     try {
       isLoading.value = true;
-
 
       final data = {
         "email": email,
         "password": pass,
         "referenceWebsite": '6968869bd31f93ad3cd05004'
       };
+
       final response = await Apiservices().postRequest(
         ApiUrl.login,
         data: data,
       );
-      print('Sending Data : $data');
+
       if (response.statusCode == 200 || response.statusCode == 201) {
-        isLoading.value = false;
-        final data = response.data;
-        print('Saved Token : ${data['accessToken']}');
-        //save token
-        LocalStorage.set('token', data['accessToken']);
-        //save userId
-        // LocalStorage.set('userId', model.user?.id);
-        // //save name
-        // LocalStorage.set('name', model.user?.name);
-        // //save email
-        // LocalStorage.set('email', model.user?.email);
+        final resData = response.data;
 
-        if(data['accessToken'] != null ){
-          print(data['accessToken']);
-          Get.offAll(() => HelloCard());
-        }
+        LocalStorage.set('token', resData['accessToken']);
+
+        Get.offAll(() => HelloCard());
       } else {
-        isLoading.value = false;
-
-        showSnackBar(title: "Failed", message: response.data["msg"] ?? "Something went wrong", context: Get.context!, error: 'error');
+        showSnackBar(
+          title: "Failed",
+          message: response.data["msg"] ?? "Something went wrong",
+          context: Get.context!,
+          error: 'error',
+        );
       }
     } catch (e) {
+      showSnackBar(
+        title: "Failed",
+        message: "Something went wrong",
+        context: Get.context!,
+        error: 'error',
+      );
+    } finally {
       isLoading.value = false;
-
-      showSnackBar(title: "Failed", message: 'Something went wrong', context: Get.context!, error: 'error');
     }
-
   }
 
-  RxBool isPasswordHidden = true.obs;
-
-  void validate(){
+  /// ─────────────────────────────────────
+  /// MOBILE VALIDATION
+  /// ─────────────────────────────────────
+  void validateMobile() {
     final mobile = mobileC.text.trim();
 
-    if(mobile.isEmpty ){
-      print('object');
-      showSnackBar(title: '', message: 'Mobile number is required', context: Get.context!, error: 'error');
+    if (mobile.isEmpty) {
+      showSnackBar(
+        title: '',
+        message: 'Mobile number is required',
+        context: Get.context!,
+        error: 'error',
+      );
+
       return;
     }
+
     final mobileRegex = RegExp(r'^[6-9]\d{9}$');
 
     if (!mobileRegex.hasMatch(mobile)) {
       showSnackBar(
         title: '',
-        message: 'Enter a valid mobile number',
+        message: 'Enter valid mobile number',
         context: Get.context!,
         error: 'error',
       );
       return;
     }
-   // loginWithPassword();
+
+    /// Navigate to OTP screen
+    Get.to(()=> OtpVerifyView());
+  }
+
+  @override
+  void onClose() {
+    emailC.clear();
+    mobileC.clear();
+    passC.clear();
+    otpC.clear();
+    emailC.dispose();
+    mobileC.dispose();
+    passC.dispose();
+    otpC.dispose();
+
+    super.onClose();
   }
 }

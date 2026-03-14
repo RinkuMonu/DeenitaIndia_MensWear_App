@@ -1,5 +1,6 @@
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
+import 'package:deenitaindia/constants/colors.dart';
 import 'package:deenitaindia/constants/image.dart';
 import 'package:deenitaindia/view/search.dart';
 import 'package:deenitaindia/view/setting.dart';
@@ -43,48 +44,54 @@ class BottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      return Scaffold(
-        extendBody: true,
-        // backgroundColor: Colors.white,
-        body: Padding(
-          padding: const EdgeInsets.only(bottom: 16.0),
-          child: pages[controller.index.value],
-        ),
+    return SafeArea(
+      bottom: true,
+      top: false,
+      child: Obx(
+          (){
+            return Scaffold(
+              extendBody: true,
+              backgroundColor: Colors.white,
+              body: Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: pages[controller.index.value],
+              ),
 
-        bottomNavigationBar: Container(
-          color: Colors.grey.shade50,
-          child: CurvedNavigationBar(
-            index: controller.index.value,
-            height: 65,
-            // backgroundColor: Colors.blueGrey.shade50,
-            color: Colors.white,
-            animationDuration: const Duration(milliseconds: 300),
-            items: List.generate(icons.length, (i) {
-              final bool isSelected = controller.index.value == i;
-              return CurvedNavigationBarItem(
-                child: SvgPicture.asset(
-                  icons[i],
-                  height: 22,
-                  colorFilter: ColorFilter.mode(
-                    isSelected ? Colors.black : Colors.grey,
-                    BlendMode.srcIn,
-                  ),
-                ),
-                label: labels[i],
-                labelStyle: TextStyle(
-                  fontSize: 11,
-                  fontWeight:
-                  isSelected ? FontWeight.w600 : FontWeight.w400,
-                  color: isSelected ? Colors.black : Colors.grey,
-                ),
-              );
-            }),
+              bottomNavigationBar: Container(
+                color: Colors.grey.shade50,
+                child: CurvedNavigationBar(
+                  index: controller.index.value,
+                  height: 65,
+                  // backgroundColor: Colors.blueGrey.shade50,
+                  color: Colors.white,
+                  animationDuration: const Duration(milliseconds: 300),
+                  items: List.generate(icons.length, (i) {
+                    final bool isSelected = controller.index.value == i;
+                    return CurvedNavigationBarItem(
+                      child: SvgPicture.asset(
+                        icons[i],
+                        height: 22,
+                        colorFilter: ColorFilter.mode(
+                          isSelected ? Colors.black : Colors.grey,
+                          BlendMode.srcIn,
+                        ),
+                      ),
+                      label: labels[i],
+                      labelStyle: TextStyle(
+                        fontSize: 11,
+                        fontWeight:
+                        isSelected ? FontWeight.w600 : FontWeight.w400,
+                        color: isSelected ? Colors.black : Colors.grey,
+                      ),
+                    );
+                  }),
 
-            onTap: controller.change,
-          ),
-        ),
-      );
-    });
+                  onTap: controller.change,
+                ),
+              ),
+            );
+          }
+      ),
+    );
   }
 }

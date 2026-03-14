@@ -3,10 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../model/profileM.dart';
-import '../service/api.dart';
-import '../utils/api_url.dart';
-import '../widgets/toast.dart';
 
 class ProfileC extends GetxController{
   final mobile = TextEditingController();
@@ -16,7 +12,6 @@ class ProfileC extends GetxController{
   final lastName = TextEditingController();
   var isLoading = false.obs;
   var isLoadingUpdate = false.obs;
-  final Rx<ProfileModel> model = ProfileModel().obs;
   RxBool isEditable = false.obs;
   RxBool isEditableMobile = true.obs;
   RxBool isEditableName = true.obs;

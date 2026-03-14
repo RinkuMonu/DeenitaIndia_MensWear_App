@@ -11,5 +11,8 @@ class AppColors {
   static const Color onboardTextColor = Color(0xff927F68);
   static const Color secondary = Color(0xff464135);
   static const Color yellow_shade = Color(0xffF5EFDD);
+  static const Color off_white = Color(0xFFF4F9FF);
+  static const Color white_shade = Color(0xFFFAFEFF);
+
 
 }
