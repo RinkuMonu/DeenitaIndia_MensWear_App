@@ -1,9 +1,15 @@
-import 'package:deenitaindia/view/splash.dart';
+import 'package:deenitaindia/service/locationServices.dart';
+import 'package:deenitaindia/view/auth/splash.dart';
+import 'package:deenitaindia/view/bottomBar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toastification/toastification.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Get.putAsync(() => LocationServices().init());
+
   runApp(const MyApp());
 }
 
@@ -15,14 +21,27 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ToastificationWrapper(
       child: GetMaterialApp(
-        title: 'Deenita',
+        builder: (context, child) {
+          return MediaQuery(
+            data: MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling),
+            child: child!,
+          );
+        },
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+         // primarySwatch: Colors.blue,
+          fontFamily: 'Alexandria',
         ),
-        home: const Splash(),
+        home: BottomBar(),
       ),
     );
   }
 }
+
+
+
+
+
+
+
 

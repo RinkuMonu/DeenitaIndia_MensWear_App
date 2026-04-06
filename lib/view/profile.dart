@@ -1,4 +1,5 @@
 import 'package:deenitaindia/constants/colors.dart';
+import 'package:deenitaindia/widgets/customAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -27,88 +28,79 @@ class _ProfileState extends State<Profile> {
         return circularProgressTop();
       }
       return Scaffold(
+        appBar: CustomAppBar(
+          title: "My Details",
+          showWishlist: false,
+          showNotification: true,
+          showMenu: false,
+        ),
         backgroundColor: Colors.white,
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: ScreenSize.height * .06),
-              Text('Settings', style: AppTextStyles.raleWayBold28),
-              SizedBox(height: ScreenSize.height * .01),
-              Text('Your Profile', style: AppTextStyles.raleWay16),
-              SizedBox(height: ScreenSize.height * .02),
-              Stack(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.4),
-                          blurRadius: 20,
-                          spreadRadius: 2,
-                          offset: const Offset(0, 8), // downward shadow
-                        ),
-                      ],
-                    ),
-                    padding: EdgeInsets.all(6),
-                    child: CircleAvatar(
-                      radius: 50,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Image.asset(AppImage.avatar),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    right: 0,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.4),
-                            blurRadius: 20,
-                            spreadRadius: 2,
-                            offset: const Offset(0, 8), // downward shadow
-                          ),
-                        ],
-                      ),
-                      padding: EdgeInsets.all(2),
-                      child: CircleAvatar(
-                        radius: 16,
-                        backgroundColor: AppColors.primary,
-                        child: Icon(Icons.edit, color: Colors.white, size: 18),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: ScreenSize.height * .02),
-              CommonTextField2(
+              Text("Full Name", style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 16,
+              color: Colors.black
+              ),),
+
+              CommonTextField(
+                readOnly: controller.isEditableName.value ,
                 controller: controller.firstName,
-                hint: 'first name',
+                hint: 'Enter Full Name',
               ),
-              CommonTextField2(
-                controller: controller.lastName,
-                hint: 'last name',
+
+              SizedBox(height: 16,),
+              Text("Email ID", style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                  color: Colors.black
+              ),),
+              CommonTextField(
+                  readOnly: controller.isEditableEmail.value ,
+                  controller: controller.email,
+                  hint: 'Enter email'),
+              SizedBox(height: 16,),
+              Text("Mobile Number", style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                  color: Colors.black
+              ),),
+              CommonTextField(
+                readOnly: controller.isEditableMobile.value ,
+                controller: controller.mobile,
+                hint: 'Enter your mobile number',
+                maxLength: 10,),
+
+              SizedBox(height: 16,),
+
+              Text("Address", style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                  color: Colors.black
+              ),),
+              CommonTextField(
+                  controller: controller.address,
+                  hint: 'address',
+                readOnly: controller.isEditableAddress.value ,
               ),
-              CommonTextField2(controller: controller.email, hint: 'email'),
-              CommonTextField2(controller: controller.mobile, hint: 'mobile',maxLength: 10,),
-              CommonTextField2(controller: controller.address, hint: 'address'),
               Spacer(),
               controller.isLoadingUpdate.value
                   ? circularProgressBottom()
                   : AppButton(
-                      title: 'Save',
+                      textColor: controller.isEditable.value ? Colors.white : Colors.black,
+                      bgColor: controller.isEditable.value ? AppColors.secondary : Colors.grey.shade200,
+                      title: controller.isEditable.value ?  'Save' : "Edit",
                       onTap: () {
-                        print('tap');
-                        controller.updateProfile();
-                      },
+                        if(controller.isEditable.value){
+                        }else{
+                          controller.makeEditable();
+                        }},
                     ),
+
+              SizedBox(height: 20,)
             ],
           ),
         ),
@@ -116,23 +108,4 @@ class _ProfileState extends State<Profile> {
     });
   }
 
-  Widget _buildContent({required String text}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(text, style: AppTextStyles.nunitoSans16),
-            Icon(Icons.arrow_forward_ios_outlined, color: Colors.grey),
-          ],
-        ),
-        // SizedBox(height: 10,),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Divider(color: Colors.grey.shade200),
-        ),
-      ],
-    );
-  }
 }

@@ -1,3 +1,4 @@
+import 'package:deenitaindia/constants/textstyle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../constants/colors.dart';
@@ -8,11 +9,15 @@ class CommonTextField extends StatelessWidget {
   final FocusNode? focusNode;
   final TextEditingController controller;
   final String? label;
+  final TextInputType? keyBoard;
+
   final String hint;
+  final bool readOnly;
   final bool obscureText;
   final int? maxLength;
   final VoidCallback? onToggleVisibility;
   final Widget? suffix;
+  final Widget? prefix;
   //final ValueNotifier<String?> errorNotifier;
 
   CommonTextField({
@@ -20,78 +25,62 @@ class CommonTextField extends StatelessWidget {
    // required this.icon,
     required this.controller,
     required this.hint,
+    this.keyBoard,
     //required this.errorNotifier,
     this.mainController,
     this.focusNode,
     this.label,
     this.obscureText = false,
+    this.readOnly = false,
     this.maxLength,
     this.onToggleVisibility,
     this.suffix,
+    this.prefix,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (label != null)
-            Text(
-              label!,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (label != null)
+          Column(
+            children: [
+              Text(
+                label!,
+                style: AppTextStyles.alexandria16w500
               ),
-            ),
-          const SizedBox(height: 8),
 
-          /// Text Field Container
-          TextFormField(
-            controller: controller,
-            focusNode: focusNode,
-            obscureText: obscureText,
-            maxLength: maxLength,
-            cursorColor: Colors.black,
-            readOnly: hint.contains('Enter email') &&
-                mainController?.isEmailVerified?.value == true,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            keyboardType: _getKeyboardType(),
-            textCapitalization: hint.contains("PAN Card Number")
-                ? TextCapitalization.characters
-                : TextCapitalization.none,
-            decoration: _inputDecoration(),
-            // onChanged: (value) {
-            //   errorNotifier.value = _validate(value);
-            //   if (hint == "Enter mobile number" && value.length == 10) {
-            //     focusNode?.unfocus();
-            //   }
-            //   if (label == "Email") {
-            //     mainController?.onEmailChanged(value);
-            //   }
-            // },
+              const SizedBox(height: 8),
+
+            ],
           ),
 
-          /// Error Text
-          // ValueListenableBuilder<String?>(
-          //   valueListenable: errorNotifier,
-          //   builder: (_, error, __) {
-          //     if (error == null) return const SizedBox(height: 6);
-          //     return Padding(
-          //       padding: const EdgeInsets.only(left: 16, top: 6),
-          //       child: Text(
-          //         error,
-          //         style: const TextStyle(
-          //           fontSize: 12,
-          //           color: Colors.redAccent,
-          //         ),
-          //       ),
-          //     );
-          //   },
-          // ),
-        ],
-      ),
+        /// Text Field Container
+        TextFormField(
+          controller: controller,
+          focusNode: focusNode,
+          obscureText: obscureText,
+          maxLength: maxLength,
+          cursorColor: Colors.black,
+          style: TextStyle(color: Colors.grey,fontSize: 16,fontWeight: FontWeight.w500),
+          readOnly: readOnly,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          keyboardType: keyBoard,
+          decoration: _inputDecoration(),
+          // onChanged: (value) {
+          //   errorNotifier.value = _validate(value);
+          //   if (hint == "Enter mobile number" && value.length == 10) {
+          //     focusNode?.unfocus();
+          //   }
+          //   if (label == "Email") {
+          //     mainController?.onEmailChanged(value);
+          //   }
+          // },
+        ),
+
+      ],
     );
   }
 
@@ -101,37 +90,36 @@ class CommonTextField extends StatelessWidget {
       hintText: hint,
       counterText: "",
       filled: true,
-      fillColor: Colors.grey.shade100,
-      hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
-      enabledBorder: _border(Colors.transparent),
-      focusedBorder: _border(AppColors.primary),
+      fillColor: Colors.white,
+      hintStyle: const TextStyle(fontSize: 14, color: Colors.grey,fontWeight: FontWeight.w300),
+      enabledBorder: _border(Colors.grey.shade200),
+      focusedBorder: _border(Colors.grey.shade200),
       errorBorder: _border(Colors.red),
       suffixIcon: _buildSuffix(),
-      prefixIcon: _buildPrefix(),
+      prefixIcon: prefix,
     );
   }
 
   OutlineInputBorder _border(Color color) => OutlineInputBorder(
-    borderRadius: BorderRadius.circular(24),
-    borderSide: BorderSide(color: color, width: 2),
+    borderRadius: BorderRadius.circular(10),
+    borderSide: BorderSide(color: color, width: 1),
   );
 
   Widget? _buildPrefix() {
-    if (!hint.contains("Enter mobile number")) return null;
+    if (!hint.contains("Enter your mobile number")) return null;
 
     return SizedBox(
-      width: 40,
+      width: 60,
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.only(left: 8),
+          padding: const EdgeInsets.only(left: 0),
           child: Text(
             '91+',
             style: TextStyle(
-              fontSize: 14,
-              color: controller.text.isNotEmpty
-                  ? Colors.black
-                  : Colors.grey.shade500,
+              fontSize: 16,
               fontWeight: FontWeight.w500,
+              fontFamily: 'Alexandria',
+              color: Color(0xff808080)
             ),
           ),
         ),
@@ -160,16 +148,6 @@ class CommonTextField extends StatelessWidget {
     );
   }
 
-  TextInputType _getKeyboardType() {
-    if (hint.contains("mobile") ||
-        hint.contains("pincode") ||
-        hint.contains("aadhaar") ||
-        hint.contains("Otp") ||
-        hint.contains("mpin")) {
-      return TextInputType.phone;
-    }
-    return TextInputType.text;
-  }
 
   String? _validate(String value) {
     if (value.isEmpty) return '$label is required';
@@ -186,7 +164,11 @@ class CommonTextField2 extends StatelessWidget {
   final String hint;
   final bool obscureText;
   final int? maxLength;
+  final bool readOnly;
+  final bool showCursor;
+  final Widget? preffix;
   final VoidCallback? onToggleVisibility;
+  final VoidCallback? onTap;
   final Widget? suffix;
   //final ValueNotifier<String?> errorNotifier;
 
@@ -198,11 +180,15 @@ class CommonTextField2 extends StatelessWidget {
     //required this.errorNotifier,
     this.mainController,
     this.focusNode,
+    this.showCursor = true,
+    this.readOnly = false,
     this.label,
     this.obscureText = false,
     this.maxLength,
     this.onToggleVisibility,
+    this.onTap,
     this.suffix,
+    this.preffix
   });
 
   @override
@@ -229,14 +215,15 @@ class CommonTextField2 extends StatelessWidget {
             obscureText: obscureText,
             maxLength: maxLength,
             cursorColor: Colors.black,
-            readOnly: hint.contains('Enter email') &&
-                mainController?.isEmailVerified?.value == true,
+            readOnly: readOnly,
+            showCursor: showCursor,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             keyboardType: _getKeyboardType(),
             textCapitalization: hint.contains("PAN Card Number")
                 ? TextCapitalization.characters
                 : TextCapitalization.none,
             decoration: _inputDecoration(),
+            onTap: onTap
             // onChanged: (value) {
             //   errorNotifier.value = _validate(value);
             //   if (hint == "Enter mobile number" && value.length == 10) {
@@ -276,19 +263,29 @@ class CommonTextField2 extends StatelessWidget {
       hintText: hint,
       counterText: "",
       filled: true,
-      fillColor: AppColors.textFieldBackColor,
-      hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
-      enabledBorder: _border(Colors.transparent),
-      focusedBorder: _border(AppColors.primary),
+      fillColor: Colors.white,
+      hintStyle: const TextStyle(fontSize: 16, color: Colors.grey),
+      enabledBorder: _border(Colors.grey.shade200),
+      focusedBorder: _border(AppColors.secondary),
       errorBorder: _border(Colors.red),
       suffixIcon: _buildSuffix(),
-      prefixIcon: _buildPrefix(),
+      prefixIcon: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        width: 40,
+        child: Center(
+          child: preffix
+        ),
+      ),
+      prefixIconConstraints: BoxConstraints(
+        minWidth: 15,
+        minHeight: 15,
+      )
     );
   }
 
   OutlineInputBorder _border(Color color) => OutlineInputBorder(
     borderRadius: BorderRadius.circular(12),
-    borderSide: BorderSide(color: color, width: 2),
+    borderSide: BorderSide(color: color, width: 1),
   );
 
   Widget? _buildPrefix() {

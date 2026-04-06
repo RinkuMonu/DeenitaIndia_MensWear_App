@@ -1,107 +1,104 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pinput/pinput.dart';
 
-import '../service/api.dart';
-import '../utils/api_url.dart';
-import '../view/login.dart';
-import '../widgets/toast.dart';
+import '../constants/colors.dart';
+import '../view/bottomBar.dart';
+import '../widgets/button.dart';
+import '../widgets/otpPopup.dart';
 
-class RegisterC extends GetxController{
-  final emailC = TextEditingController();
-  final mobileC = TextEditingController();
-  final fNameC = TextEditingController();
-  final lNameC = TextEditingController();
-  final passC = TextEditingController();
+class RegisterC extends GetxController {
 
-  RxBool isLoading = false.obs;
-  RxBool isPasswordHidden = true.obs;
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final mobileController = TextEditingController();
+  final passController = TextEditingController();
+  final passConfirmController = TextEditingController();
+  final otpController = TextEditingController();
 
-  Future<void> register() async {
-    var email = emailC.text.trim();
-    var fname = fNameC.text.trim();
-    var lname = lNameC.text.trim();
-    var pass = passC.text.trim();
-    var mobile = mobileC.text.trim();
-    try {
-      isLoading.value = true;
+  /// Form validation
+  RxBool isFormValid = false.obs;
 
+  /// Email verification states
+  RxBool isEmailVerifying = false.obs;
+  RxBool isEmailVerified = false.obs;
 
-      final data = {
-        "firstName": fname,
-        "lastName": lname,
-        "email": email,
-        "password": pass,
-        "referenceWebsite": "6968869bd31f93ad3cd05004",
-        "mobile": mobile,
-        "address": "",
-        "role": "user"
-      };
-      final response = await Apiservices().postRequest(
-        ApiUrl.signup,
-        data: data,
-      );
-      print('Sending Data : $data');
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        isLoading.value = false;
-        final data = response.data;
-        //print('Saved Token : ${data['accessToken']}');
-        //save token
-        //LocalStorage.set('token', data['accessToken']);
-        //save userId
-        // LocalStorage.set('userId', model.user?.id);
-        // //save name
-        // LocalStorage.set('name', model.user?.name);
-        // //save email
-        // LocalStorage.set('email', model.user?.email);
-        Get.offAll(() => Login());
+  /// Mobile verification states
+  RxBool isMobileVerifying = false.obs;
+  RxBool isMobileVerified = false.obs;
 
-      } else {
-        isLoading.value = false;
+  @override
+  void onInit() {
+    super.onInit();
 
-        showSnackBar(title: "Failed", message: response.data["msg"], context: Get.context!, error: 'error');
-      }
-    } catch (e) {
-      isLoading.value = false;
+    nameController.addListener(validateForm);
+    passController.addListener(validateForm);
+    passConfirmController.addListener(validateForm);
 
-      showSnackBar(title: "Failed", message: 'Something went wrong', context: Get.context!, error: 'error');
-    }
+    /// Reset email verification if user edits
+    emailController.addListener(() {
+      isEmailVerified.value = false;
+      validateForm();
+    });
 
+    /// Reset mobile verification if user edits
+    mobileController.addListener(() {
+      isMobileVerified.value = false;
+      validateForm();
+    });
+
+    /// Revalidate when verification state changes
+    ever(isEmailVerified, (_) => validateForm());
+    ever(isMobileVerified, (_) => validateForm());
   }
-  void validate(){
-    final email = emailC.text.trim();
-    final password = passC.text.trim();
 
-    if(emailC.text.isEmpty || mobileC.text.isEmpty || fNameC.text.isEmpty || lNameC.text.isEmpty || passC.text.isEmpty ){
-      print('object');
-      showSnackBar(title: '', message: 'All Field is required', context: Get.context!, error: 'error');
-      return;
-    }
-    final emailRegex = RegExp(
-      r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-    );
-
-    if (!emailRegex.hasMatch(email)) {
-      showSnackBar(
-        title: '',
-        message: 'Enter a valid email address',
-        context: Get.context!,
-        error: 'error',
-      );
-      return;
-    }
-    final passRegex = RegExp(
-      r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#\$&*~]).{8,}$',
-    );
-
-    if (!passRegex.hasMatch(password)) {
-      showSnackBar(
-        title: '',
-        message: 'Password must be at least 8 chars, include upper, lower, number & special char',
-        context: Get.context!,
-        error: 'error',
-      );
-      return;
-    }
-    register();
+  void validateForm() {
+    isFormValid.value =
+        nameController.text.trim().isNotEmpty &&
+            emailController.text.trim().isNotEmpty &&
+            mobileController.text.trim().isNotEmpty &&
+            passController.text.trim().isNotEmpty &&
+            passConfirmController.text.trim().isNotEmpty &&
+            isEmailVerified.value &&
+            isMobileVerified.value;
   }
+
+  /// 🔥 Simulated Email Verification
+  Future<void> verifyEmail() async {
+    if (emailController.text.isEmpty) return;
+
+    isEmailVerifying.value = true;
+
+    await Future.delayed(const Duration(seconds: 2)); // simulate API
+
+    isEmailVerifying.value = false;
+    isEmailVerified.value = true;
+
+    validateForm();
+  }
+
+  /// 🔥 Simulated Mobile Verification
+  Future<void> verifyMobile() async {
+    if (mobileController.text.isEmpty) return;
+
+    isMobileVerifying.value = true;
+
+    await Future.delayed(const Duration(seconds: 2));
+
+    isMobileVerifying.value = false;
+
+    /// DO NOT mark verified yet
+    showMobileOtpPopup(onNext: () {
+      isMobileVerified.value = true;
+      validateForm();
+    }, controller: otpController);
+  }
+
+
+
+
+
+
+
+
 }

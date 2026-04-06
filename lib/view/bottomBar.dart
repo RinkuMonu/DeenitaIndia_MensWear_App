@@ -1,73 +1,98 @@
-import 'package:deenitaindia/view/profile.dart';
+import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
+import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
+import 'package:deenitaindia/constants/colors.dart';
+import 'package:deenitaindia/constants/image.dart';
+import 'package:deenitaindia/view/search.dart';
 import 'package:deenitaindia/view/setting.dart';
-import 'package:deenitaindia/view/wishlist.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
+import '../controller/bottomNavC.dart';
 import 'cart.dart';
+import 'categoryScreen.dart';
 import 'home.dart';
 
-class BottomBar extends StatefulWidget {
-  const BottomBar({super.key});
+class BottomBar extends StatelessWidget {
+  BottomBar({super.key});
 
-  @override
-  State<BottomBar> createState() => _BottomBarState();
-}
+  final BottomNavC controller = Get.put(BottomNavC());
 
-class _BottomBarState extends State<BottomBar> {
-  int _currentIndex = 0;
-
-  final  _pages = const [
+  final List<Widget> pages = const [
     Home(),
-    Wishlist(),
-    Center(child: Text('Search')),
+    Search(),
+    CategoryScreen(),
     CartView(),
     Setting(),
   ];
+
+  final List<String> labels = [
+    'Home',
+    'Search',
+    'Category',
+    'Cart',
+    'Account',
+  ];
+
+  final List<String> icons = [
+    AppImage.home,
+    AppImage.search,
+    AppImage.more,
+    AppImage.cart,
+    AppImage.user,
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: _pages[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.grey,
-        selectedFontSize: 12,
-        unselectedFontSize: 12,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite_border),
-            activeIcon: Icon(Icons.favorite),
-            label: 'WishList',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search_outlined),
-            activeIcon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_bag_outlined),
-            activeIcon: Icon(Icons.shopping_bag),
-            label: 'Cart',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            activeIcon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
+    return SafeArea(
+      bottom: false,
+      top: false,
+      child: Obx(
+          (){
+            return Scaffold(
+              backgroundColor: Colors.white,
+              body: Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: pages[controller.index.value],
+              ),
+
+              bottomNavigationBar: SafeArea(
+                top: false,
+                child: Container(
+                  color: Colors.grey.shade50,
+                  child: CurvedNavigationBar(
+                    index: controller.index.value,
+                    height: 65,
+                    backgroundColor: Colors.blueGrey.shade50,
+                    color: Colors.white,
+                    animationDuration: const Duration(milliseconds: 300),
+                    items: List.generate(icons.length, (i) {
+                      final bool isSelected = controller.index.value == i;
+                      return CurvedNavigationBarItem(
+                        child: SvgPicture.asset(
+                          icons[i],
+                          height: 22,
+                          colorFilter: ColorFilter.mode(
+                            isSelected ? Colors.black : Colors.grey,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                        label: labels[i],
+                        labelStyle: TextStyle(
+                          fontSize: 11,
+                          fontWeight:
+                          isSelected ? FontWeight.w600 : FontWeight.w400,
+                          color: isSelected ? Colors.black : Colors.grey,
+                        ),
+                      );
+                    }),
+
+                    onTap: controller.change,
+                  ),
+                ),
+              ),
+            );
+          }
       ),
     );
   }

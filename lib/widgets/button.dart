@@ -4,11 +4,12 @@ import '../constants/colors.dart';
 
 class AppButton extends StatelessWidget {
   final String title;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final Color bgColor;
 
   final Color textColor;
   final bool isPressed;
+  final bool isIconShow;
   final double radius;
   final bool isOutlined; // ✅ Added flag
 
@@ -17,9 +18,10 @@ class AppButton extends StatelessWidget {
     required this.title,
     required this.onTap,
     this.radius = 12,
+    this.isIconShow = false,
     this.bgColor = AppColors.primary,
     // this.bgColor = AppColors.secondaryColor,
-    this.textColor = Colors.grey,
+    this.textColor = Colors.white,
     this.isPressed = false,
     this.isOutlined = false, // ✅ Default false
     SizedBox? child,
@@ -54,34 +56,28 @@ class AppButton extends StatelessWidget {
           ),
 
           /// 🔥 ONLY THIS PART CHANGED
-          child: Stack(
-            alignment: Alignment.center,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               /// BUTTON TEXT (UNCHANGED)
               Text(
                 title,
                 style: TextStyle(
-
-                  color: isOutlined ? bgColor : title.contains('Verify Otp ') || title.contains('Verify Pan') || title.contains('Verify Bank') || title.contains('Submit KYC') ? Colors.black : Colors.white,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 15,
+                  color:  textColor,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
                 ),
               ),
+              SizedBox(width: 10,),
 
-              /// 🎅 RUNNING SANTA (CHRISTMAS THEME)
-              // Positioned(
-              //   right: 5,
-              //   child: SizedBox(
-              //     height: 60,
-              //     width: 60,
-              //     child: Lottie.asset(
-              //       'assets/json/Merry Christmas.json',
-              //       repeat: true,
-              //       fit: BoxFit.contain,
-              //     ),
-              //   ),
-              // ),
-            ],
+              if(isIconShow)
+                Icon(
+                  Icons.arrow_forward,
+                  color: Colors.white,
+
+                )
+
+             ],
           ),
         ),
       ),

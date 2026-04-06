@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 
 import '../service/api.dart';
 import '../utils/api_url.dart';
-import '../view/forgotPassword.dart';
+import '../view/auth/forgotPassword.dart';
 import '../view/home.dart';
-import '../view/login.dart';
+import '../view/auth/login.dart';
 import '../widgets/toast.dart';
 
 class ForgotPasswordC extends GetxController{
