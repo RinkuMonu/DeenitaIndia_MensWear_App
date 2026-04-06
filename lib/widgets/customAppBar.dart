@@ -91,19 +91,23 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: actions!,
               )
-                  : showWishlist
-                  ? _actionButton(
-                    () => Get.to(() => WishlistScreen()),
-                AppImage.fav
-              )
-                  : showNotification
-                  ? _actionButton(
-                onNotificationTap ??
-                        () => Get.to(
-                            () => const NotificationScreen()),
-                  'assets/icons/bell.svg'
-              )
-                  : const SizedBox.shrink(),
+                  : Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (showWishlist)
+                    _actionButton(
+                          () => Get.to(() => WishlistScreen()),
+                      AppImage.fav,
+                    ),
+
+                  if (showNotification)
+                    _actionButton(
+                      onNotificationTap ??
+                              () => Get.to(() => const NotificationScreen()),
+                      'assets/icons/bell.svg',
+                    ),
+                ],
+              ),
             ),
           ],
         ),

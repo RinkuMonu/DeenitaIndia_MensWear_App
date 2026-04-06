@@ -14,5 +14,15 @@ class AppColors {
   static const Color off_white = Color(0xFFF4F9FF);
   static const Color white_shade = Color(0xFFFAFEFF);
 
+  static const Color blueshade = Color(0xFF31A3C5);
+  static const Color pinkshade = Color(0xFFD2007E);
+  static const Color orangeshade = Color(0xFFD97700);
+
+  static const Color whitemixture = Color(0xFFDBDBDB);
+
+  static const Color boysSectionblueColor = Color(0xFF011E78);
+  static const Color girlsSectionblueColor = Color(0xFFC76701);
+  static const Color infantsSectionblueColor = Color(0xFFC79201);
+
 
 }

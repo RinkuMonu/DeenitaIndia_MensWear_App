@@ -45,48 +45,50 @@ class BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      bottom: true,
+      bottom: false,
       top: false,
       child: Obx(
           (){
             return Scaffold(
-              extendBody: true,
               backgroundColor: Colors.white,
               body: Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
+                padding: const EdgeInsets.only(bottom: 8.0),
                 child: pages[controller.index.value],
               ),
 
-              bottomNavigationBar: Container(
-                color: Colors.grey.shade50,
-                child: CurvedNavigationBar(
-                  index: controller.index.value,
-                  height: 65,
-                  // backgroundColor: Colors.blueGrey.shade50,
-                  color: Colors.white,
-                  animationDuration: const Duration(milliseconds: 300),
-                  items: List.generate(icons.length, (i) {
-                    final bool isSelected = controller.index.value == i;
-                    return CurvedNavigationBarItem(
-                      child: SvgPicture.asset(
-                        icons[i],
-                        height: 22,
-                        colorFilter: ColorFilter.mode(
-                          isSelected ? Colors.black : Colors.grey,
-                          BlendMode.srcIn,
+              bottomNavigationBar: SafeArea(
+                top: false,
+                child: Container(
+                  color: Colors.grey.shade50,
+                  child: CurvedNavigationBar(
+                    index: controller.index.value,
+                    height: 65,
+                    backgroundColor: Colors.blueGrey.shade50,
+                    color: Colors.white,
+                    animationDuration: const Duration(milliseconds: 300),
+                    items: List.generate(icons.length, (i) {
+                      final bool isSelected = controller.index.value == i;
+                      return CurvedNavigationBarItem(
+                        child: SvgPicture.asset(
+                          icons[i],
+                          height: 22,
+                          colorFilter: ColorFilter.mode(
+                            isSelected ? Colors.black : Colors.grey,
+                            BlendMode.srcIn,
+                          ),
                         ),
-                      ),
-                      label: labels[i],
-                      labelStyle: TextStyle(
-                        fontSize: 11,
-                        fontWeight:
-                        isSelected ? FontWeight.w600 : FontWeight.w400,
-                        color: isSelected ? Colors.black : Colors.grey,
-                      ),
-                    );
-                  }),
+                        label: labels[i],
+                        labelStyle: TextStyle(
+                          fontSize: 11,
+                          fontWeight:
+                          isSelected ? FontWeight.w600 : FontWeight.w400,
+                          color: isSelected ? Colors.black : Colors.grey,
+                        ),
+                      );
+                    }),
 
-                  onTap: controller.change,
+                    onTap: controller.change,
+                  ),
                 ),
               ),
             );

@@ -1,4 +1,6 @@
+import 'package:deenitaindia/constants/colors.dart';
 import 'package:deenitaindia/constants/image.dart';
+import 'package:deenitaindia/widgets/button.dart';
 import 'package:deenitaindia/widgets/customAppBar.dart';
 import 'package:deenitaindia/widgets/loader.dart';
 import 'package:flutter/material.dart';
@@ -30,37 +32,37 @@ class _NotificationScreenState extends State<NotificationScreen> {
         showNotification: false,
         showWishlist: false,
       ),
-      body: Obx(() {
-
-        if(controller.isLoading.value){
-          return Center(child: AppLoader());
-        }
-
-
-        if (controller.notifications.isEmpty) {
-          return Center(
-            child: SingleChildScrollView(
-              child: _emptyNotification(),
-            ),
-          );
-        }
-
-        return ListView.separated(
-          padding: const EdgeInsets.only(top: 16),
-          itemCount: controller.notifications.length,
-          separatorBuilder: (context, index) =>
-          const Divider(),
-          itemBuilder: (context, index) {
-            final item = controller.notifications[index];
-            return _notificationItemWidget(
-              time: item.time,
-              title: item.title,
-              subTitle: item.subTitle,
-              image: item.image,
+      body: SafeArea(
+        child: Obx(() {
+        
+          if(controller.isLoading.value){
+            return Center(child: AppLoader());
+          }
+        
+        
+          if (controller.notifications.isEmpty) {
+            return Center(
+              child: SingleChildScrollView(
+                child: _emptyNotification(),
+              ),
             );
-          },
-        );
-      }),
+          }
+        
+          return ListView.builder(
+            padding: const EdgeInsets.only(top: 16),
+            itemCount: controller.notifications.length,
+            itemBuilder: (context, index) {
+              final item = controller.notifications[index];
+              return _notificationItemWidget(
+                time: item.time,
+                title: item.title,
+                subTitle: item.subTitle,
+                image: item.image,
+              );
+            },
+          );
+        }),
+      ),
     );
   }
 
@@ -103,77 +105,101 @@ class _NotificationScreenState extends State<NotificationScreen> {
     required String image,
   }) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            time,
-            style: const TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 14,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-            Image.network(
-            image,
-            height: 50,
-            width: 50,
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) {
-              return const Icon(
-                Icons.notifications,
-                size: 40,
-                color: Colors.grey,
-              );
-            },
-            loadingBuilder: (context, child, loadingProgress) {
-              if (loadingProgress == null) return child;
-              return  SizedBox(
-                height: 50,
-                width: 50,
-                child: Center(
-                  child: AppLoader(),
-                ),
-              );
-            },
-          ),
-              const SizedBox(width: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.grey.shade200),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
 
-              // ✅ THIS FIXES OVERFLOW
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14,
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      subTitle,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w300,
-                        fontSize: 12,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ],
+            // 🔥 Banner Image
+            Padding(
+              padding:  EdgeInsets.symmetric(horizontal: 12.0,vertical: 12),
+              child: ClipRRect(
+
+                borderRadius: const BorderRadius.all(Radius.circular(16)),
+                child: Image.network(
+                  image,
+                  height: 140,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
                 ),
               ),
-            ],
-          ),
-        ],
+            ),
+
+            // 🔥 Content
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+
+                  // Title Row
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(Icons.local_offer,
+                          color: Colors.red, size: 18),
+                      const SizedBox(width: 6),
+
+                      Expanded(
+                        child: Text(
+                          title,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 6),
+
+                  // Subtitle
+                  Text(
+                    subTitle,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey,
+                    ),
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  // Time
+                  Row(
+                    children: [
+                      const Icon(Icons.access_time,
+                          size: 12, color: Colors.grey),
+                      const SizedBox(width: 4),
+                      Text(
+                        time,
+                        style: const TextStyle(
+                          fontSize: 11,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 12),
+
+                  // 🔥 Button
+                  SizedBox(
+                    width: double.infinity,
+                    height: 40,
+                    child: AppButton(title: "Shop Now", onTap: (){}, bgColor: AppColors.yellow_shade,textColor: Colors.black,)
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

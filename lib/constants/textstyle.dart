@@ -119,7 +119,7 @@ class AppTextStyles {
   );
 
   static final TextStyle alexandria32Secondary = TextStyle(
-      fontSize: 32,
+      fontSize: 24,
       fontWeight: FontWeight.w600,
       fontFamily: 'Alexandria',
       color: AppColors.secondary,

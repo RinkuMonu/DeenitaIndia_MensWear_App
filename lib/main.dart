@@ -1,5 +1,6 @@
 import 'package:deenitaindia/service/locationServices.dart';
 import 'package:deenitaindia/view/auth/splash.dart';
+import 'package:deenitaindia/view/bottomBar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toastification/toastification.dart';
@@ -26,15 +27,21 @@ class MyApp extends StatelessWidget {
             child: child!,
           );
         },
-        title: 'Deenita',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
          // primarySwatch: Colors.blue,
           fontFamily: 'Alexandria',
         ),
-        home: const Splash(),
+        home: BottomBar(),
       ),
     );
   }
 }
+
+
+
+
+
+
+
 

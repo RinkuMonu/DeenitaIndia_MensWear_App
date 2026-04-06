@@ -64,8 +64,8 @@ class AppButton extends StatelessWidget {
                 title,
                 style: TextStyle(
                   color:  textColor,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
                 ),
               ),
               SizedBox(width: 10,),

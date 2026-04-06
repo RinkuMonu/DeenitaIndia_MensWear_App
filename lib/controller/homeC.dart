@@ -24,7 +24,10 @@ class HomeC extends GetxController {
   final searchController = SearchController();
 
   RxInt selectedIndex = 0.obs;
+  RxInt selectedMainCategory = 0.obs;
   RxInt selectedFav = 0.obs;
+
+  final selectedKidsTab = 0.obs;
   late ScrollController bannerScrollController;
   RxDouble bannerPage = 0.0.obs;
   var name = ''.obs;
@@ -42,8 +45,9 @@ class HomeC extends GetxController {
   RxInt currentBannerIndex = 0.obs;
   RxList<String> bannerImages = <String>[
     AppImage.homeLargeImage,
+    AppImage.bannerModel,
     AppImage.homeLargeImage,
-    AppImage.homeLargeImage,
+    AppImage.bannerModel,
   ].obs;
 
   RxString countdownTimer = '24 : 15 : 10'.obs;
@@ -57,8 +61,9 @@ class HomeC extends GetxController {
 
     topBanner.addAll([
       AppImage.homeBanner,
+      AppImage.homeBanner2,
       AppImage.homeBanner,
-      AppImage.homeBanner
+      AppImage.homeBanner2,
     ]);
 
     category.addAll([

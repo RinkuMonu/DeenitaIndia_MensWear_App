@@ -1,23 +1,14 @@
-import 'package:deenitaindia/constants/image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 
-class Category {
-  final String icon;
-  final String title;
+import '../constants/image.dart';
+import 'homeC.dart';
 
-  const Category({
-    required this.icon,
-    required this.title,
-  });
-}
-
-class CategoryController extends GetxController {
-  // ── Text Controller ───────────────────────────────────
+class AllBrandScreenController extends GetxController{
   final searchController = TextEditingController();
-
+  RxList<BrandsCategory> brands = <BrandsCategory>[].obs;
+  RxList<BrandsCategory> filteredBrands = <BrandsCategory>[].obs;
   // ── Speech to Text ────────────────────────────────────
   final stt.SpeechToText _speech = stt.SpeechToText();
   var isListening    = false.obs;   // mic active
@@ -39,32 +30,8 @@ class CategoryController extends GetxController {
 
   var selectedLeftIndex = 0.obs;
 
-  final leftCategories = [
-    {'image': AppImage.shirt, 'title': 'Shirts'},
-    {'image': AppImage.shirt, 'title': 'T-Shirts'},
-    {'image': AppImage.shirt, 'title': 'Jackets'},
-    {'image': AppImage.shirt, 'title': 'Blazers'},
-    {'image': AppImage.shirt, 'title': 'Shirts'},
-    {'image': AppImage.shirt, 'title': 'T-Shirts'},
-    {'image': AppImage.shirt, 'title': 'Jackets'},
-    {'image': AppImage.shirt, 'title': 'Blazers'},
-  ];
 
-  final rightItems = [
-    {'image': AppImage.shirt, 'title': 'Casual Shirts'},
-    {'image': AppImage.shirt, 'title': 'Formal Shirts'},
-    {'image': AppImage.shirt, 'title': 'Checked Shirts'},
-    {'image': AppImage.shirt, 'title': 'Printed Shirts'},
-    {'image': AppImage.shirt, 'title': 'Casual Shirts'},
-    {'image': AppImage.shirt, 'title': 'Formal Shirts'},
-    {'image': AppImage.shirt, 'title': 'Checked Shirts'},
-    {'image': AppImage.shirt, 'title': 'Printed Shirts'},
-    {'image': AppImage.shirt, 'title': 'Casual Shirts'},
-    {'image': AppImage.shirt, 'title': 'Formal Shirts'},
-    {'image': AppImage.shirt, 'title': 'Checked Shirts'},
-    {'image': AppImage.shirt, 'title': 'Printed Shirts'},
-  ];
- List<Map<String, Color>> categoryTabColors = [
+  List<Map<String, Color>> categoryTabColors = [
     // Men
     {
       'bg': Color(0xFFD5EDFF),
@@ -101,6 +68,28 @@ class CategoryController extends GetxController {
     super.onInit();
     _initSpeech();
 
+    brands.addAll([
+      BrandsCategory(image: AppImage.ironWolf, offer: "50%OFF"),
+      BrandsCategory(image: AppImage.urbanClad, offer: ""),
+      BrandsCategory(image: AppImage.urbanClad, offer: ""),
+      BrandsCategory(image: AppImage.urbanClad, offer: ""),
+      BrandsCategory(image: AppImage.vanture, offer: "50%OFF"),
+      BrandsCategory(image: AppImage.vanture, offer: "50%OFF"),
+      BrandsCategory(image: AppImage.urbanClad, offer: ""),
+      BrandsCategory(image: AppImage.urbanClad, offer: ""),
+      BrandsCategory(image: AppImage.urbanClad, offer: ""),
+      BrandsCategory(image: AppImage.urbanClad, offer: ""),
+      BrandsCategory(image: AppImage.urbanClad, offer: ""),
+      BrandsCategory(image: AppImage.urbanClad, offer: ""),
+      BrandsCategory(image: AppImage.urbanClad, offer: ""),
+      BrandsCategory(image: AppImage.urbanClad, offer: ""),
+      BrandsCategory(image: AppImage.vanture, offer: "50%OFF"),
+      BrandsCategory(image: AppImage.vanture, offer: "50%OFF"),
+
+    ]);
+
+    filteredBrands.assignAll(brands);
+
     // ── Listen to text field changes ────────────────────
     searchController.addListener(() {
       final query = searchController.text.trim();
@@ -115,6 +104,24 @@ class CategoryController extends GetxController {
         _onSearch(query);
       }
     });
+  }
+
+  void filterBrands(String query) {
+    if (query.isEmpty) {
+      filteredBrands.assignAll(brands);
+      hasResults.value = true;
+      return;
+    }
+
+    final lowerQuery = query.toLowerCase();
+
+    final result = brands.where((brand) {
+      return brand.image.toLowerCase().contains(lowerQuery) ||
+          brand.offer.toLowerCase().contains(lowerQuery);
+    }).toList();
+
+    filteredBrands.assignAll(result);
+    hasResults.value = result.isNotEmpty;
   }
 
   // ── Initialize Speech Engine ──────────────────────────
@@ -236,4 +243,5 @@ class CategoryController extends GetxController {
     searchController.dispose();
     super.onClose();
   }
+
 }

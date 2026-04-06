@@ -31,19 +31,19 @@ class NotificationController extends GetxController {
           time: "Just now",
           title: "Order Confirmed",
           subTitle: "Your order #12345 has been confirmed",
-          image: "https://cdn-icons-png.flaticon.com/512/190/190411.png",
+          image: "https://mir-s3-cdn-cf.behance.net/project_modules/fs/84e85642054547.57bea3c1858d3.png",
         ),
         NotificationModel(
           time: "10 min ago",
           title: "Special Offer 🎉",
           subTitle: "Get 20% off on your next purchase",
-          image: "https://cdn-icons-png.flaticon.com/512/891/891462.png",
+          image: "https://mir-s3-cdn-cf.behance.net/project_modules/fs/84e85642054547.57bea3c1858d3.png",
         ),
         NotificationModel(
           time: "Yesterday",
           title: "Payment Successful",
           subTitle: "₹499 paid successfully via UPI",
-          image: "https://cdn-icons-png.flaticon.com/512/3144/3144456.png",
+          image: "https://mir-s3-cdn-cf.behance.net/project_modules/fs/84e85642054547.57bea3c1858d3.png",
         ),
       ]);
 

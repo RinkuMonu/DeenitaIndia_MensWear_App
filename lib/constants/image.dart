@@ -64,4 +64,23 @@ class AppImage {
   static const String ocssionFit1 = "assets/image/unsplash_DGH1u80sZik (4).png";
   static const String ocssionFit2 = "assets/image/unsplash_DGH1u80sZik (5).png";
   static const String ocssionFit3 = "assets/image/unsplash_DGH1u80sZik (6).png";
+
+  static const String homeCategorybg = "assets/image/homePagecategorybg.png";
+  static const String homeBanner2 = "assets/image/homeBanner2.png";
+  static const String bankOffer = "assets/image/bankOffer.png";
+
+  static const String boyBand = "assets/image/boysBand.png";
+  static const String girlBand = "assets/image/girlsBand.png";
+  static const String infantBand = "assets/image/infantBand.png";
+
+  static const String girlsSectionPrice = "assets/image/girlsSectionPrice.png";
+  static const String boysSectionPrice = "assets/image/boysSectionPrice.png";
+  static const String infantsSectionPrice = "assets/image/infantSectionprice.png";
+
+  static const String bannerModel = "assets/image/bannerModel.png";
+  static const String newArrivalImage = "assets/image/newArrivalImage.png";
+static const String topRated = "assets/image/topRated.png";
+static const String adBanner = "assets/image/adBanner.png";
+static const String shoppingBag = "assets/icons/shoppingBag.svg";
+
 }
