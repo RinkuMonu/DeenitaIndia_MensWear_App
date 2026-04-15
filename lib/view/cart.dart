@@ -1,6 +1,7 @@
 import 'package:deenitaindia/constants/colors.dart';
 import 'package:deenitaindia/constants/image.dart';
 import 'package:deenitaindia/constants/textstyle.dart';
+import 'package:deenitaindia/view/check_outpage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -84,7 +85,9 @@ class _CartViewState extends State<CartView> {
             title: 'Go To Checkout',
             bgColor: AppColors.secondary,
             isIconShow: true,
-            onTap: () {},
+            onTap: () {
+              Get.to(() => CheckOutpage());
+            },
           ),
 
           const SizedBox(height: 100), // bottom spacing

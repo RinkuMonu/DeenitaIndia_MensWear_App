@@ -85,26 +85,26 @@ class _LoginState extends State<Login> {
                     ),
 
                     const SizedBox(width: 15),
-                    const Text("|"),
-                    const SizedBox(width: 15),
-
-                    /// EMAIL TAB
-                    GestureDetector(
-                      onTap: _controller.selectEmail,
-                      child: Column(
-                        children: [
-                          Text(
-                            "Email",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: !_controller.isMobileSelected.value
-                                  ? Colors.black
-                                  : Colors.grey,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    // const Text("|"),
+                    // const SizedBox(width: 15),
+                    //
+                    // /// EMAIL TAB
+                    // GestureDetector(
+                    //   onTap: _controller.selectEmail,
+                    //   child: Column(
+                    //     children: [
+                    //       Text(
+                    //         "Email",
+                    //         style: TextStyle(
+                    //           fontWeight: FontWeight.w600,
+                    //           color: !_controller.isMobileSelected.value
+                    //               ? Colors.black
+                    //               : Colors.grey,
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 )),
 
@@ -180,7 +180,7 @@ class _LoginState extends State<Login> {
                           title: _controller.isLoading.value
                               ? "Loading..."
                               : "Login",
-                          onTap: _controller.loginWithPassword,
+                          onTap: _controller.sendOtp,
                         )),
 
 
@@ -268,7 +268,7 @@ class _LoginState extends State<Login> {
                         const SizedBox(height: 16),
                         AppButton(
                           title: 'Send OTP',
-                          onTap: _controller.validateMobile,
+                          onTap: _controller.sendOtp,
                         ),
 
                         const SizedBox(height: 20),
@@ -377,7 +377,7 @@ class _LoginState extends State<Login> {
                         title: _controller.isLoading.value
                             ? "Loading..."
                             : "Login",
-                        onTap: _controller.loginWithPassword,
+                        onTap: _controller.sendOtp,
                       )),
 
 

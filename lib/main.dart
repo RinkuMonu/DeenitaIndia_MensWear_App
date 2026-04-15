@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
          // primarySwatch: Colors.blue,
           fontFamily: 'Alexandria',
         ),
-        home: BottomBar(),
+        home: Splash(),
       ),
     );
   }

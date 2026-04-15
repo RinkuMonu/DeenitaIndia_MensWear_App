@@ -1,5 +1,6 @@
 import 'package:deenitaindia/constants/colors.dart';
 import 'package:deenitaindia/widgets/customAppBar.dart';
+import 'package:deenitaindia/widgets/otpPopup.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -61,7 +62,51 @@ class _ProfileState extends State<Profile> {
               CommonTextField(
                   readOnly: controller.isEditableEmail.value ,
                   controller: controller.email,
-                  hint: 'Enter email'),
+                  hint: 'Enter email',
+                suffix: Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: GestureDetector(
+                    onTap: controller.isEmailVerified.value ||
+                        controller.isEmailVerifying.value
+                        ? null
+                        : (){
+                      showMobileOtpPopup(onNext: (){Get.back();}, controller: controller.otpController);
+                    },
+                    child: Container(
+                      height: 32,
+                      width: 80,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: controller.isEmailVerified.value
+                            ? AppColors.primary
+                            : Colors.grey.shade300,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: controller.isEmailVerifying.value
+                          ? const SizedBox(
+                        height: 16,
+                        width: 16,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
+                      )
+                          : Text(
+                        controller.isEmailVerified.value
+                            ? "Verified"
+                            : "Verify",
+                        style: TextStyle(
+                          color: controller.isEmailVerified.value
+                              ? Colors.white
+                              : Colors.black54,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               SizedBox(height: 16,),
               Text("Mobile Number", style: TextStyle(
                   fontWeight: FontWeight.w500,
@@ -72,7 +117,51 @@ class _ProfileState extends State<Profile> {
                 readOnly: controller.isEditableMobile.value ,
                 controller: controller.mobile,
                 hint: 'Enter your mobile number',
-                maxLength: 10,),
+                maxLength: 10,
+                suffix: Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: GestureDetector(
+                    onTap: controller.isEmailVerified.value ||
+                        controller.isEmailVerifying.value
+                        ? null
+                        : (){
+                      showMobileOtpPopup(onNext: (){}, controller: controller.otpController);
+                    },
+                    child: Container(
+                      height: 32,
+                      width: 80,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: controller.isEmailVerified.value
+                            ? AppColors.primary
+                            : Colors.grey.shade300,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: controller.isEmailVerifying.value
+                          ? const SizedBox(
+                        height: 16,
+                        width: 16,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
+                      )
+                          : Text(
+                        controller.isEmailVerified.value
+                            ? "Verified"
+                            : "Verify",
+                        style: TextStyle(
+                          color: controller.isEmailVerified.value
+                              ? Colors.white
+                              : Colors.black54,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
 
               SizedBox(height: 16,),
 

@@ -1,6 +1,8 @@
 import 'package:deenitaindia/constants/image.dart';
 import 'package:deenitaindia/constants/textstyle.dart';
+import 'package:deenitaindia/view/faq_page.dart';
 import 'package:deenitaindia/view/profile.dart';
+import 'package:deenitaindia/view/reward_screen.dart';
 import 'package:deenitaindia/widgets/customAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,6 +10,8 @@ import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../constants/size.dart';
+import '../widgets/logout_pop_up.dart';
+import 'help_center_screen.dart';
 import 'myOrders.dart';
 
 class Setting extends StatefulWidget {
@@ -57,7 +61,9 @@ class _SettingState extends State<Setting> {
             settingTile(
               title: 'My Rewards',
               icon: AppImage.card,
-              onTap: () {},
+              onTap: () {
+                Get.to(() => RewardScreen());
+              },
               badge: 'NEW',
             ),
             _divider(height: 1),
@@ -66,14 +72,19 @@ class _SettingState extends State<Setting> {
             settingTile(
               title: 'Help Center',
               icon: AppImage.headPhones,
-              onTap: () {},
+              onTap: () {
+
+                Get.to(() => HelpCenterScreen());
+              },
             ),
             _divider(height: 1),
             // ── FAQs ─────────────────────────────────────────────────────
             settingTile(
               title: 'FAQs',
               icon: AppImage.questions,
-              onTap: () {},
+              onTap: () {
+                Get.to(() => FaqPage());
+              },
             ),
 
             // ── Legal links section ───────────────────────────────────────
@@ -96,14 +107,15 @@ class _SettingState extends State<Setting> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: OutlinedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    logoutPopup();
+                  },
                   style: OutlinedButton.styleFrom(
                     minimumSize: const Size(double.infinity, 54),
                     side: const BorderSide(color: Colors.red, width: 1),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(0),
                     ),
-
                   ),
                   child: const Text(
                     'Log Out',

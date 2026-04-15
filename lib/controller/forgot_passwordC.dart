@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../service/api.dart';
+import '../service/apiService.dart';
 import '../utils/api_url.dart';
 import '../view/auth/forgotPassword.dart';
 import '../view/home.dart';
@@ -29,7 +29,7 @@ class ForgotPasswordC extends GetxController{
         "referenceWebsite": "6968869bd31f93ad3cd05004"
       };
       final response = await Apiservices().postRequest(
-        ApiUrl.verifyEmail,
+        "ApiUrl.verifyEmail",
         data: data,
       );
       print('Sending Data : $data');
@@ -37,26 +37,18 @@ class ForgotPasswordC extends GetxController{
         isLoading.value = false;
         final data = response.data;
         resetToken.value = data["resetToken"];
-        // print('Saved Token : ${data['accessToken']}');
-        //save token
-        //LocalStorage.set('token', data['accessToken']);
-        //save userId
-        // LocalStorage.set('userId', model.user?.id);
-        // //save name
-        // LocalStorage.set('name', model.user?.name);
-        // //save email
-        // LocalStorage.set('email', model.user?.email);
+
 
         Get.to(()=> ForgotPassword());
       } else {
         isLoading.value = false;
 
-        showSnackBar(title: "Failed", message: response.data["msg"], context: Get.context!, error: 'error');
+        showSnackBar(title: "Failed", message: response.data["msg"], );
       }
     } catch (e) {
       isLoading.value = false;
 
-      showSnackBar(title: "Failed", message: 'Something went wrong', context: Get.context!, error: 'error');
+      showSnackBar(title: "Failed", message: 'Something went wrong', );
     }
 
   }
@@ -73,33 +65,24 @@ class ForgotPasswordC extends GetxController{
         "newPassword": newPass
       };
       final response = await Apiservices().postRequest(
-        ApiUrl.resetPassword,
+        "ApiUrl.resetPassword",
         data: data,
       );
       print('Sending Data : $data');
       if (response.statusCode == 200 || response.statusCode == 201) {
         isPasswordLoading.value = false;
         final data = response.data;
-        // print('Saved Token : ${data['accessToken']}');
-        //save token
-        //LocalStorage.set('token', data['accessToken']);
-        //save userId
-        // LocalStorage.set('userId', model.user?.id);
-        // //save name
-        // LocalStorage.set('name', model.user?.name);
-        // //save email
-        // LocalStorage.set('email', model.user?.email);
 
         Get.offAll(()=> Login());
       } else {
         isPasswordLoading.value = false;
 
-        showSnackBar(title: "Failed", message: response.data["msg"], context: Get.context!, error: 'error');
+        showSnackBar(title: "Failed", message: response.data["msg"], );
       }
     } catch (e) {
       isPasswordLoading.value = false;
 
-      showSnackBar(title: "Failed", message: 'Something went wrong', context: Get.context!, error: 'error');
+      showSnackBar(title: "Failed", message: 'Something went wrong',);
     }
 
   }
@@ -108,7 +91,7 @@ class ForgotPasswordC extends GetxController{
     final email = emailC.text.trim();
     if(emailC.text.isEmpty ){
       print('object');
-      showSnackBar(title: '', message: 'Email Field is required', context: Get.context!, error: 'error');
+      showSnackBar(title: '', message: 'Email Field is required', );
       return;
     }
     final emailRegex = RegExp(
@@ -119,8 +102,7 @@ class ForgotPasswordC extends GetxController{
       showSnackBar(
         title: '',
         message: 'Enter a valid email address',
-        context: Get.context!,
-        error: 'error',
+
       );
       return;
     }
@@ -132,7 +114,7 @@ class ForgotPasswordC extends GetxController{
     final password = newPasswordC.text.trim();
     if(passwordC.text.isEmpty || newPasswordC.text.isEmpty ){
       print('object');
-      showSnackBar(title: '', message: 'All Field is required', context: Get.context!, error: 'error');
+      showSnackBar(title: '', message: 'All Field is required', );
       return;
     }
     final passRegex = RegExp(
@@ -143,8 +125,7 @@ class ForgotPasswordC extends GetxController{
       showSnackBar(
         title: '',
         message: 'Password must be at least 8 chars, include upper, lower, number & special char',
-        context: Get.context!,
-        error: 'error',
+
       );
       return;
     }

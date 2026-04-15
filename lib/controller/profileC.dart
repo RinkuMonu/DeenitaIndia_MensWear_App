@@ -7,6 +7,8 @@ import 'package:get/get.dart';
 class ProfileC extends GetxController{
   final mobile = TextEditingController();
   final email = TextEditingController();
+
+  final otpController = TextEditingController();
   final firstName = TextEditingController();
   final address = TextEditingController();
   final lastName = TextEditingController();
@@ -14,6 +16,14 @@ class ProfileC extends GetxController{
   var isLoadingUpdate = false.obs;
   RxBool isEditable = false.obs;
   RxBool isEditableMobile = true.obs;
+
+  RxBool isMobileVerifying = false.obs;
+
+  RxBool isMobileVerified = false.obs;
+
+  RxBool isEmailVerifying = false.obs;
+
+  RxBool isEmailVerified = false.obs;
   RxBool isEditableName = true.obs;
   RxBool isEditableEmail = true.obs;
   RxBool isEditableAddress = true.obs;

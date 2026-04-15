@@ -5,7 +5,7 @@ import 'package:deenitaindia/constants/image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../service/api.dart';
+import '../service/apiService.dart';
 import '../utils/api_url.dart';
 import '../widgets/toast.dart';
 

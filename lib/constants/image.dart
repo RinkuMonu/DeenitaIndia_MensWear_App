@@ -83,4 +83,14 @@ static const String topRated = "assets/image/topRated.png";
 static const String adBanner = "assets/image/adBanner.png";
 static const String shoppingBag = "assets/icons/shoppingBag.svg";
 
+static const String parcelBox = "assets/image/parcel.png";
+
+static const String coin = "assets/image/coin.png";
+
+static const String scratchCard = "assets/image/scratchCard.png";
+
+static const String verticalRibbon = "assets/image/verticalRibbion.png";
+
+static const String horizontalRibbon = "assets/image/horizontalRibbon.png";
+
 }

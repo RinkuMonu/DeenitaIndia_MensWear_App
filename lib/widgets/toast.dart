@@ -1,10 +1,12 @@
 import 'package:deenitaindia/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:toastification/toastification.dart';
 
-void showSnackBar({required String title, required String message,required BuildContext context,required error})async{
+void showSnackBar({required String title, required String message, String? error})async{
   toastification.show(
-    context: context, // optional if you use ToastificationWrapper
+    context: Get.context, // optional if you use ToastificationWrapper
     type: ToastificationType.success,
     style: ToastificationStyle.flat,
     autoCloseDuration: const Duration(seconds: 5),
