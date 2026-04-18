@@ -13,7 +13,7 @@ class LoginC extends GetxController {
   final emailC = TextEditingController();
   final mobileC = TextEditingController();
   final passC = TextEditingController();
-  final otpC = TextEditingController();
+
 
   /// States
   RxBool isLoading = false.obs;
@@ -34,10 +34,13 @@ class LoginC extends GetxController {
   /// ─────────────────────────────────────
   /// SEND OTP (FIXED)
   /// ─────────────────────────────────────
-  Future<void> sendOtp() async {
-    final mobile = mobileC.text.trim();
+  Future<void> sendOtp({String? mobileNumber}) async {
+    // ✅ Use passed mobileNumber (resend case) or fall back to text field (login case)
+    final mobile = (mobileNumber != null && mobileNumber.isNotEmpty)
+        ? mobileNumber
+        : mobileC.text.trim();
 
-    // ✅ validation first
+    // ✅ Single validation block
     if (mobile.isEmpty) {
       showSnackBar(title: '', message: 'Mobile number is required');
       return;
@@ -52,41 +55,41 @@ class LoginC extends GetxController {
     try {
       isLoading.value = true;
 
-      final data = {
-        "mobile": mobile,
-      };
+      final data = {"mobile": mobile};
+      print("Data Payload :: $data");
 
       final response = await Apiservices().postRequest(
         ApiUrl.sendOtp,
-        data: data, // ✅ FIX: pass data
+        data: data,
       );
 
-      isLoading.value = false;
+      print("Data response :: $response");
 
-      if (response != null && response.data['status'] == true) {
-
+      if (response != null && response.data['success'] == true) {
         showSnackBar(
           title: '',
           message: response.data['message'] ?? 'OTP sent successfully',
         );
 
-        /// Navigate
-        Get.to(() => OtpVerifyView());
+        // ✅ Only navigate if called from login screen (no mobileNumber passed)
+        if (mobileNumber == null) {
+          Get.to(() => OtpVerifyView(mobileNumber: mobile));
+        }
 
       } else {
         showSnackBar(
           title: '',
-          message: response.data['message'] ?? 'Something went wrong',
+          message: response?.data['message'] ?? 'Something went wrong',
         );
       }
 
     } catch (e) {
-      isLoading.value = false;
-
       showSnackBar(
         title: '',
         message: 'Error: ${e.toString()}',
       );
+    } finally {
+      isLoading.value = false;
     }
   }
 
@@ -98,7 +101,6 @@ class LoginC extends GetxController {
     emailC.dispose();
     mobileC.dispose();
     passC.dispose();
-    otpC.dispose();
     super.onClose();
   }
 }

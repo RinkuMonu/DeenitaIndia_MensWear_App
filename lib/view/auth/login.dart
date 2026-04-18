@@ -112,132 +112,22 @@ class _LoginState extends State<Login> {
                 /// 🔥 DYNAMIC FORM
                 Obx(() {
 
-                  /// ───────── MOBILE UI ─────────
-                  if(_controller.isMobilePasswordSelected.value){
-                    return Column(
-                      children: [
 
-                        CommonTextField(
-                          controller: _controller.mobileC,
-                          maxLength: 10,
-                          prefix: SizedBox(
-                            width: 60,
-                            child: Center(
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 0),
-                                child: Text(
-                                  '91+',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                      fontFamily: 'Alexandria',
-                                      color: Colors.grey
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          hint: 'Enter your mobile number',
-                          label: "",
-                          keyBoard: TextInputType.number,
-                        ),
-
-                        Obx(() => CommonTextField(
-                          controller: _controller.passC,
-                          hint: 'Enter your password',
-                          label: "",
-                          obscureText: _controller.isPasswordHidden.value,
-                          prefix: IconButton(
-                            icon: Icon(
-                              _controller.isPasswordHidden.value
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                              color: Colors.grey,
-                            ),
-                            onPressed: () {
-                              _controller.isPasswordHidden.value =
-                              !_controller.isPasswordHidden.value;
-                            },
-                          ),
-                        )),
-
-                        SizedBox(height: 20,),
-                        Align(alignment: Alignment.centerRight,
-                          child: InkWell(
-                            onTap:(){
-                              Get.to(()=> ForgotPassword());
-                            },
-                            child: Text("Forget Password", style: TextStyle(
-                            color: Colors.grey,
-                              fontWeight: FontWeight.w500,
-
-                          ),),
-                        ),),
-
-                        const SizedBox(height: 25),
-
-                        Obx(() => AppButton(
-                          title: _controller.isLoading.value
-                              ? "Loading..."
-                              : "Login",
-                          onTap: _controller.sendOtp,
-                        )),
-
-
-                        SizedBox(height: 20,),
-                        Align(
-                          alignment: AlignmentGeometry.topCenter,
-                          child: InkWell(
-                            onTap: (){
-                              _controller.selectMobilePassword();
-                            },
-                            child: Text("Login with Otp", style: TextStyle(
-                                color: AppColors.primary,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16
-                            ),),
-                          ),
-                        ),
-
-                        SizedBox(height: 30,),
-                        Align(
-                          alignment: Alignment.center,
-                          child: RichText(
-                            text: TextSpan(
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Colors.grey,
-                              ),
-                              children: [
-
-                                const TextSpan(
-                                  text: "Don’t have an account? ",
-                                ),
-
-                                TextSpan(
-                                  text: "Create account",
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w600,
-                                    decoration: TextDecoration.underline,
-                                  ),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      Get.to(()=> RegisterScreen()); // change route as needed
-                                    },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+                  if(_controller.isLoading.value){
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.black,
+                      ),
                     );
                   }
 
 
 
+
+
+
                   /// ───────── MOBILE UI ─────────
-                  if (_controller.isMobileSelected.value) {
+
                     return Column(
                       children: [
 
@@ -273,147 +163,146 @@ class _LoginState extends State<Login> {
 
                         const SizedBox(height: 20),
 
-                        Align(
-                          alignment: AlignmentGeometry.topCenter,
-                          child: InkWell(
-                            onTap: (){
-                              _controller.selectMobilePassword();
-                            },
-                            child: Text("Login with Password", style: TextStyle(
-                              color: AppColors.primary,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16
-                            ),),
-                          ),
-                        ),
-
-
-                        SizedBox(height: 30,),
-                        Align(
-                          alignment: Alignment.center,
-                          child: RichText(
-                            text: TextSpan(
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Colors.grey,
-                              ),
-                              children: [
-
-                                const TextSpan(
-                                  text: "Don’t have an account? ",
-                                ),
-
-                                TextSpan(
-                                  text: "Create account",
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w600,
-                                    decoration: TextDecoration.underline,
-                                  ),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      Get.to(()=> RegisterScreen()); // change route as needed
-                                    },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                        // Align(
+                        //   alignment: AlignmentGeometry.topCenter,
+                        //   child: InkWell(
+                        //     onTap: (){
+                        //       _controller.selectMobilePassword();
+                        //     },
+                        //     child: Text("Login with Password", style: TextStyle(
+                        //       color: AppColors.primary,
+                        //       fontWeight: FontWeight.w500,
+                        //       fontSize: 16
+                        //     ),),
+                        //   ),
+                        // ),
+                        //
+                        //
+                        // SizedBox(height: 30,),
+                        // Align(
+                        //   alignment: Alignment.center,
+                        //   child: RichText(
+                        //     text: TextSpan(
+                        //       style: const TextStyle(
+                        //         fontSize: 14,
+                        //         color: Colors.grey,
+                        //       ),
+                        //       children: [
+                        //
+                        //         const TextSpan(
+                        //           text: "Don’t have an account? ",
+                        //         ),
+                        //
+                        //         TextSpan(
+                        //           text: "Create account",
+                        //           style: const TextStyle(
+                        //             color: Colors.black,
+                        //             fontWeight: FontWeight.w600,
+                        //             decoration: TextDecoration.underline,
+                        //           ),
+                        //           recognizer: TapGestureRecognizer()
+                        //             ..onTap = () {
+                        //               Get.to(()=> RegisterScreen()); // change route as needed
+                        //             },
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     );
-                  }
 
                   /// ───────── EMAIL UI ─────────
-                  return Column(
-                    children: [
-
-                      CommonTextField(
-                        controller: _controller.emailC,
-                        hint: 'Enter your mail id',
-                        label: "",
-                        prefix: Icon(
-                          Icons.email_outlined,
-                          color: Colors.grey,
-                        ),
-                      ),
-
-
-                      Obx(() => CommonTextField(
-                        controller: _controller.passC,
-                        hint: 'Enter password',
-                        label: "",
-                        obscureText: _controller.isPasswordHidden.value,
-                        prefix: IconButton(
-                          icon: Icon(
-                            _controller.isPasswordHidden.value
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            color: Colors.grey,
-                          ),
-                          onPressed: () {
-                            _controller.isPasswordHidden.value =
-                            !_controller.isPasswordHidden.value;
-                          },
-                        ),
-                      )),
-
-                      SizedBox(height: 20,),
-                      Align(alignment: Alignment.centerRight,
-                        child: InkWell(
-                          onTap:(){
-                            Get.to(()=> ForgotPassword());
-                          },
-                          child: Text("Forget Password", style: TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.w500,
-
-                          ),),
-                        ),),
-
-
-                      const SizedBox(height: 25),
-
-                      Obx(() => AppButton(
-                        title: _controller.isLoading.value
-                            ? "Loading..."
-                            : "Login",
-                        onTap: _controller.sendOtp,
-                      )),
-
-
-                      SizedBox(height: 30,),
-                      Align(
-                        alignment: Alignment.center,
-                        child: RichText(
-                          text: TextSpan(
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey,
-                            ),
-                            children: [
-
-                              const TextSpan(
-                                text: "Don’t have an account? ",
-                              ),
-
-                              TextSpan(
-                                text: "Create account",
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600,
-                                  decoration: TextDecoration.underline,
-                                ),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Get.to(()=> RegisterScreen()); // change route as needed
-                                  },
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
+                  // return Column(
+                  //   children: [
+                  //
+                  //     CommonTextField(
+                  //       controller: _controller.emailC,
+                  //       hint: 'Enter your mail id',
+                  //       label: "",
+                  //       prefix: Icon(
+                  //         Icons.email_outlined,
+                  //         color: Colors.grey,
+                  //       ),
+                  //     ),
+                  //
+                  //
+                  //     Obx(() => CommonTextField(
+                  //       controller: _controller.passC,
+                  //       hint: 'Enter password',
+                  //       label: "",
+                  //       obscureText: _controller.isPasswordHidden.value,
+                  //       prefix: IconButton(
+                  //         icon: Icon(
+                  //           _controller.isPasswordHidden.value
+                  //               ? Icons.visibility_off
+                  //               : Icons.visibility,
+                  //           color: Colors.grey,
+                  //         ),
+                  //         onPressed: () {
+                  //           _controller.isPasswordHidden.value =
+                  //           !_controller.isPasswordHidden.value;
+                  //         },
+                  //       ),
+                  //     )),
+                  //
+                  //     SizedBox(height: 20,),
+                  //     Align(alignment: Alignment.centerRight,
+                  //       child: InkWell(
+                  //         onTap:(){
+                  //           Get.to(()=> ForgotPassword());
+                  //         },
+                  //         child: Text("Forget Password", style: TextStyle(
+                  //           color: Colors.grey,
+                  //           fontWeight: FontWeight.w500,
+                  //
+                  //         ),),
+                  //       ),),
+                  //
+                  //
+                  //     const SizedBox(height: 25),
+                  //
+                  //     Obx(() => AppButton(
+                  //       title: _controller.isLoading.value
+                  //           ? "Loading..."
+                  //           : "Login",
+                  //       onTap: _controller.sendOtp,
+                  //     )),
+                  //
+                  //
+                  //     SizedBox(height: 30,),
+                  //     Align(
+                  //       alignment: Alignment.center,
+                  //       child: RichText(
+                  //         text: TextSpan(
+                  //           style: const TextStyle(
+                  //             fontSize: 14,
+                  //             color: Colors.grey,
+                  //           ),
+                  //           children: [
+                  //
+                  //             const TextSpan(
+                  //               text: "Don’t have an account? ",
+                  //             ),
+                  //
+                  //             TextSpan(
+                  //               text: "Create account",
+                  //               style: const TextStyle(
+                  //                 color: Colors.black,
+                  //                 fontWeight: FontWeight.w600,
+                  //                 decoration: TextDecoration.underline,
+                  //               ),
+                  //               recognizer: TapGestureRecognizer()
+                  //                 ..onTap = () {
+                  //                   Get.to(()=> RegisterScreen()); // change route as needed
+                  //                 },
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // );
                 }),
               ],
             ),

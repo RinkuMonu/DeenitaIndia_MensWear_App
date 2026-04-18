@@ -9,6 +9,7 @@ import '../../constants/image.dart';
 import '../../constants/size.dart';
 import '../../constants/textstyle.dart';
 import '../../controller/loginC.dart';
+import '../../controller/otp_verify_controller.dart';
 import '../../widgets/button.dart';
 import '../../widgets/otpPopup.dart';
 import '../../widgets/textfield.dart';
@@ -17,7 +18,8 @@ import 'forgotPassword.dart';
 import '../home.dart';
 
 class OtpVerifyView extends StatefulWidget {
-  const OtpVerifyView({super.key});
+  final String mobileNumber;
+  const OtpVerifyView({super.key, required this.mobileNumber});
 
   @override
   State<OtpVerifyView> createState() => _OtpVerifyViewState();
@@ -46,7 +48,7 @@ class _OtpVerifyViewState extends State<OtpVerifyView> {
       // ],
     ),
   );
-  final _controller  = Get.put(LoginC());
+  final _controller  = Get.put(OtpVerifyController());
   @override
   Widget build(BuildContext context) {
     ScreenSize.init(context);
@@ -116,47 +118,37 @@ class _OtpVerifyViewState extends State<OtpVerifyView> {
               SizedBox(height: 20,),
 
 
-              Row(
+              Obx(() => Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  
-                  Text("Resend OTP", style: TextStyle(
-                    color: Colors.grey,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 13
-                  ),),
-
-
-                  Text("00:30", style: TextStyle(
-                    color: Colors.grey,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 13
-                  ),),
-                  
+                  GestureDetector(
+                    onTap: _controller.canResend.value
+                        ? () => _controller.resendOtp(widget.mobileNumber)
+                        : null,
+                    child: Text(
+                      "Resend OTP",
+                      style: TextStyle(
+                        color: _controller.canResend.value
+                            ? Colors.green   // active color
+                            : Colors.grey,   // disabled color
+                        fontWeight: FontWeight.w500,
+                        fontSize: 13,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    _controller.canResend.value ? "Ready!" : _controller.timerText,
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 13,
+                    ),
+                  ),
                 ],
-              ),
+              )),
               SizedBox(height: ScreenSize.height * .03,),
               AppButton(title: 'Verify OTP', onTap: (){
-                // Get.offAll(()=> BottomBar());
-                //_controller.validate();
-
-                showSuccessDialog(
-                  image: "assets/image/successStatus.png",
-                  // title: "All Done!",
-                  subtitle: "Your account has been created successfully.",
-                  onNext: () {
-                    Get.offAll(() => BottomBar());
-                  },
-                );
-
-                showSuccessDialog(
-                  image: "assets/image/failStatus.svg",
-                  // title: "All Done!",
-                  subtitle: "Your account has been created successfully.",
-                  onNext: () {
-                    Get.offAll(() => BottomBar());
-                  },
-                );
+                _controller.verifyOtp(mobileNumber: widget.mobileNumber);
               }),
 
 

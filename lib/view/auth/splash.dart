@@ -25,10 +25,10 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     ScreenSize.init(context);
     return  Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       body: Center(
         child: Image.asset(
-          "assets/image/logo.png",
+          "assets/image/wearaahlogo.png",
           height: 200,
         ),
       ),

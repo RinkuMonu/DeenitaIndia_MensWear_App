@@ -7,4 +7,14 @@ class ApiUrl {
 
   static const String sendOtp = "${baseUrl}otp/send";
 
+  static const String verifyOtp = "${baseUrl}auth/register/via/otp";
+
+  static const String getSubcategory = "${baseUrl}subcategory";
+
+  static const String getBrand = "${baseUrl}brand/web";
+
+
+
+
+
 }
